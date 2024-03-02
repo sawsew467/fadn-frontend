@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Layout } from "antd";
+import { Layout, Menu } from "antd";
 
 const { Header } = Layout;
 
@@ -15,7 +15,7 @@ export const HeaderRight = styled.div`
   .wrap-options {
     margin-right: 16px;
     cursor: pointer;
-    border: 2px solid #1677ff;
+    border: 2px solid #202342;
     border-radius: 24px;
     height: 40px;
     overflow: hidden;
@@ -59,7 +59,7 @@ export const HeaderRight = styled.div`
 
 export const HeaderStyled = styled(Header)`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 export const ImageLogo = styled.div`
   display: flex;
@@ -70,5 +70,20 @@ export const ImageLogo = styled.div`
     width: 80%;
     height: auto;
     object-fit: cover;
+  }
+`;
+
+export const MenuStyled = styled(Menu)`
+  background: #202342;
+  color: #c6d6ff;
+  & .ant-menu-item {
+    color: #c6d6ff;
+  }
+  & .ant-menu-item-active {
+    color: #fff !important;
+  }
+  & .ant-menu-item-selected {
+    background-color: #f22876;
+    color: #fff;
   }
 `;

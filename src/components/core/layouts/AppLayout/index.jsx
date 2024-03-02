@@ -76,11 +76,11 @@ const AppLayout = () => {
     >
       <Sider
         trigger={null}
-        collapsible
-        collapsed={collapsed}
+        // collapsible
+        // collapsed={collapsed}
         style={{
           padding: 0,
-          background: colorBgContainer,
+          background: "#202342",
         }}
       >
         <S.ImageLogo>
@@ -92,7 +92,11 @@ const AppLayout = () => {
             height={40}
           />
         </S.ImageLogo>
-        <Menu defaultSelectedKeys={["1"]} mode="inline" items={sidebarMenu} />
+        <S.MenuStyled
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={sidebarMenu}
+        />
         <Divider />
         <h3
           style={{
@@ -100,6 +104,7 @@ const AppLayout = () => {
             fontWeight: 500,
             marginBottom: 20,
             fontSize: 16,
+            color: "#c6d6ff",
           }}
         >
           Gần đây
@@ -132,6 +137,7 @@ const AppLayout = () => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
+                  color: "#fff",
                 }}
               >
                 {item.title}
@@ -145,21 +151,10 @@ const AppLayout = () => {
         <S.HeaderStyled
           style={{
             padding: 0,
-            background: colorBgContainer,
+            background: "#fff",
           }}
         >
-          <Button
-            type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            style={{
-              fontSize: "16px",
-              width: 64,
-              height: 64,
-            }}
-          />
           <S.HeaderRight>
-            {/* <SelectLanguage /> */}
             <Dropdown
               menu={{ items }}
               placement="bottom"
@@ -191,7 +186,8 @@ const AppLayout = () => {
         </S.HeaderStyled>
         <Content
           style={{
-            margin: "0 16px",
+            padding: "0 16px",
+            // background: "#fff",
           }}
         ></Content>
       </Layout>
