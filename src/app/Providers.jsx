@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeProvider } from "styled-components";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Provider } from "react-redux";
 import { makeStore } from "@/store";
@@ -14,7 +13,7 @@ function Providers({ children }) {
 
   return (
     <Provider store={storeRef.current}>
-      <AntdRegistry>{children}</AntdRegistry>;
+      <AntdRegistry>{children}</AntdRegistry>
     </Provider>
   );
 }
