@@ -20,7 +20,7 @@ import * as S from "./AppLayout.styles";
 
 const { Content, Sider } = Layout;
 
-const AppLayout = () => {
+const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -81,6 +81,9 @@ const AppLayout = () => {
         style={{
           padding: 0,
           background: "#202342",
+          borderTopRightRadius: 8,
+          borderBottomRightRadius: 8,
+          boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px",
         }}
       >
         <S.ImageLogo>
@@ -128,7 +131,9 @@ const AppLayout = () => {
             >
               <Badge dot>
                 <Avatar
-                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
+                  src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${
+                    index + 15
+                  }`}
                 />
               </Badge>
               <p
@@ -148,7 +153,7 @@ const AppLayout = () => {
         </div>
       </Sider>
       <Layout>
-        <S.HeaderStyled
+        {/* <S.HeaderStyled
           style={{
             padding: 0,
             background: "#fff",
@@ -183,13 +188,15 @@ const AppLayout = () => {
               </div>
             </Dropdown>
           </S.HeaderRight>
-        </S.HeaderStyled>
+        </S.HeaderStyled> */}
         <Content
           style={{
-            padding: "0 16px",
-            // background: "#fff",
+            padding: "32px",
+            background: "#e1e5fe80",
           }}
-        ></Content>
+        >
+          {children}
+        </Content>
       </Layout>
     </Layout>
   );
