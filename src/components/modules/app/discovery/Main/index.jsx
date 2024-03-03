@@ -6,14 +6,19 @@ import { useSearchParams } from "next/navigation";
 import Button from "@/components/core/common/Button";
 import FirstView from "../FirstView";
 import MatchedView from "../MatchedView";
+import RoomView from "../RoomView";
 
 function Discovery() {
   const searchParams = useSearchParams();
   const matchId = searchParams.get("matchId");
+  const roomId = searchParams.get("roomId");
 
   const renderContent = () => {
     if (matchId) {
       return <MatchedView></MatchedView>;
+    }
+    if (roomId) {
+      return <RoomView></RoomView>;
     }
     return <FirstView></FirstView>;
   };
