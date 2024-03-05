@@ -8,17 +8,25 @@ import { useRouter } from "next/navigation";
 import Card from "./Card";
 import Button from "@/components/core/common/Button";
 
+import { authToken, createMeeting } from "@/libs/react-video/api";
+import { useAppDispatch } from "@/hooks/useRedux";
+
 import * as S from "./MatchedView.styles";
+import { actionChangeMeetingId } from "@/store/features/app/appSlice";
 
 function MatchedView() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  const handleReady = () => {
+  const handleReady = async () => {
+    const meetingId = `bcxo-sapw-utk0`;
+    dispatch(actionChangeMeetingId(meetingId));
+
     setIsLoading(true);
     setTimeout(() => {
-      const roomId = "room1234";
-      router.push(`?roomId=${roomId}`);
+      // const roomId = "room1234";
+      router.push(`?roomId=${meetingId}`);
     }, 5000);
   };
 
