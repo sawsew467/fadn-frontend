@@ -41,6 +41,9 @@ function Video() {
     setIsCameraOn((prev) => !prev);
     toggleWebcam();
   };
+  const handleEndCall = () => {
+    //
+  };
   return (
     <S.PlayerWrap>
       <ParticipantView
@@ -85,7 +88,12 @@ function Video() {
           ></Image>
         </S.ControllItem>
       </S.Controller>
-      <S.EndCallButton type="primary" danger size="large">
+      <S.EndCallButton
+        type="primary"
+        danger
+        size="large"
+        onClick={handleEndCall}
+      >
         Kết thúc
       </S.EndCallButton>
     </S.PlayerWrap>
