@@ -1,7 +1,7 @@
 import Discovery from "@/components/modules/app/discovery/Main";
 
-function App({ searchParams }) {
-  return <Discovery searchParams={searchParams}></Discovery>;
+function App() {
+  return <Discovery></Discovery>;
 }
 
 export default App;

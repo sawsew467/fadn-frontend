@@ -1,4 +1,12 @@
 import { Flex } from "antd";
+import dynamic from "next/dynamic";
+
+const CallBox = dynamic(
+  () => import("@/components/modules/app/discovery/RoomView/CallBox/index"),
+  {
+    ssr: false,
+  }
+);
 
 function RoomView() {
   return (
@@ -38,13 +46,7 @@ function RoomView() {
           00:09:32
         </p>
       </Flex>
-      <div
-        style={{
-          flex: 1,
-          background: "#fff",
-          borderRadius: 12,
-        }}
-      ></div>
+      <CallBox></CallBox>
     </Flex>
   );
 }
