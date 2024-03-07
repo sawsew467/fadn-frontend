@@ -1,46 +1,15 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
-import {
-  Avatar,
-  Dropdown,
-  Layout,
-  Menu,
-  theme,
-  Button,
-  Divider,
-  Badge,
-} from "antd";
+import { Avatar, Layout, Divider, Badge } from "antd";
 
-import { sidebarMenu } from "@/helpers/data/layout";
+import { sidebarAppMenu } from "@/helpers/data/layout";
 
 import * as S from "./AppLayout.styles";
 
 const { Content, Sider } = Layout;
 
 const AppLayout = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
-  const items = [
-    {
-      key: "1",
-      label: <p>Log out</p>,
-    },
-    {
-      key: "2",
-      label: <p>Profile</p>,
-    },
-    {
-      key: "3",
-      label: <p>Change password</p>,
-    },
-  ];
-
   const data = [
     {
       title: "Nguyen Van A",
@@ -76,8 +45,6 @@ const AppLayout = ({ children }) => {
     >
       <Sider
         trigger={null}
-        // collapsible
-        // collapsed={collapsed}
         style={{
           padding: 0,
           background: "#202342",
@@ -98,7 +65,7 @@ const AppLayout = ({ children }) => {
         <S.MenuStyled
           defaultSelectedKeys={["1"]}
           mode="inline"
-          items={sidebarMenu}
+          items={sidebarAppMenu}
         />
         <Divider />
         <h3

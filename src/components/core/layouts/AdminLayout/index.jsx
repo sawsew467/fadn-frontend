@@ -1,23 +1,126 @@
-function AdminLayout({ children }) {
+"use client";
+
+import Image from "next/image";
+import { Avatar, Layout, Dropdown, Badge } from "antd";
+import { useRouter } from "next/navigation";
+import { BellOutlined } from "@ant-design/icons";
+
+import { sidebarAdminMenu } from "@/helpers/data/layout";
+
+import DropdownNotification from "../../common/DropdownNotification";
+
+import * as S from "./AdminLayout.styles";
+
+const { Content, Sider } = Layout;
+
+const AdminLayout = ({ children }) => {
+  const router = useRouter();
+  const handleLogout = () => {
+    //
+  };
+  const items = [
+    {
+      key: "1",
+      label: <p onClick={handleLogout}>Đăng xuất</p>,
+    },
+    {
+      key: "2",
+      label: (
+        <p onClick={() => router.push("/admin/change-password")}>
+          Đổi mật khẩu
+        </p>
+      ),
+    },
+  ];
+
   return (
-    <div
+    <Layout
       style={{
-        display: "flex",
-        flexDirection: "column",
+        minHeight: "100vh",
       }}
     >
-      <header>admin header</header>
-      <div
+      <Sider
+        trigger={null}
         style={{
-          display: "flex",
+          padding: 0,
+          background: "#fff",
+          borderTopRightRadius: 8,
+          borderBottomRightRadius: 8,
+          boxShadow: "rgba(0, 0, 0, 0.15) 0px 5px 15px",
         }}
       >
-        <nav>admin sider</nav>
-        <main>{children}</main>
-      </div>
-      <footer>admin footer</footer>
-    </div>
+        <S.ImageLogo>
+          <Image
+            className="dropdown-icon"
+            src="/images/auth/logo.png"
+            alt="dropdown"
+            width={200}
+            height={40}
+          />
+        </S.ImageLogo>
+        <S.MenuStyled
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          items={sidebarAdminMenu}
+        />
+      </Sider>
+      <Layout>
+        <S.HeaderStyled
+          style={{
+            padding: 0,
+            background: "#fff",
+          }}
+        >
+          <S.HeaderRight>
+            <Dropdown
+              arrow={{ pointAtCenter: true }}
+              trigger={["click"]}
+              dropdownRender={() => <DropdownNotification />}
+            >
+              <Badge count={5}>
+                <BellOutlined style={{ fontSize: "24px", color: "#297fff" }} />
+              </Badge>
+            </Dropdown>
+            <Dropdown
+              menu={{ items }}
+              placement="bottom"
+              arrow={{ pointAtCenter: true }}
+              trigger={["click"]}
+            >
+              <div className="wrap-options">
+                <Avatar
+                  src={
+                    <Image
+                      src={"/images/avatar/img1.png"}
+                      alt="avatar"
+                      priority={true}
+                      width={16}
+                      height={16}
+                    ></Image>
+                  }
+                ></Avatar>
+                <p className="user-name">Tran Van Bao Thang</p>
+                <Image
+                  className="dropdown-icon"
+                  src="/icons/layout/dropdown.svg"
+                  alt="dropdown"
+                  width={8}
+                  height={4}
+                />
+              </div>
+            </Dropdown>
+          </S.HeaderRight>
+        </S.HeaderStyled>
+        <Content
+          style={{
+            padding: "32px",
+            background: "#e1e5fe80",
+          }}
+        >
+          {children}
+        </Content>
+      </Layout>
+    </Layout>
   );
-}
-
+};
 export default AdminLayout;
