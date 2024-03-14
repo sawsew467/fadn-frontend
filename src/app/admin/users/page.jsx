@@ -120,10 +120,10 @@ export default function Users() {
       <Breadcrumb
         items={[
           {
-            title: <a href='/admin'>Admin</a>,
+            title: <Link href='/admin'>Admin</Link>,
           },
           {
-            title: <a href="/admin/users">Users</a>,
+            title: <Link href="/admin/users">Users</Link>,
           },
         ]}
       />
