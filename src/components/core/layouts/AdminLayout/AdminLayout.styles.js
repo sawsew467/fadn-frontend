@@ -75,5 +75,19 @@ export const ImageLogo = styled.div`
     object-fit: cover;
   }
 `;
+export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+`;
+
+export const SearchBox = styled.div`
+  flex-grow: 1;
+  display: flex;
+  gap: small;
+  justify-content: center;
+
+`;
 
 export const MenuStyled = styled(Menu)``;
