@@ -70,15 +70,12 @@ export default function Users() {
       title: "Tags",
       key: "tags",
       dataIndex: "tags",
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
       render: (tags) => (
         <>
-          {Array.isArray(tags) ? tags.map((tag) => {
+          {Array.isArray(tags) ? tags.filter(tag => tag !== "Admin").map((tag) => {
             let color = tag === "User" ? "green" :
               tag === "Guest" ? "geekblue" :
-                tag === "Admin" ? "red" : "default";
+                "default";
             return <Tag color={color} key={tag}>{tag}</Tag>;
           }) : null}
         </>
@@ -101,19 +98,21 @@ export default function Users() {
     },
   ];
 
-  const data = users.map(user => (
-    {
-      key: user.id,
-      name: `${user.firstName} ${user.lastName}`,
-      age: calculateAge(user.dateOfBirth),
-      phone: user.phone,
-      email: user.email,
-      tags: [user.role.name],
-      popularity: user.popularity,
+  const data = users
+    .filter(user => !user.role.name.includes("Admin"))
+    .map(user => (
+      {
+        key: user.id,
+        name: `${user.firstName} ${user.lastName}`,
+        age: calculateAge(user.dateOfBirth),
+        phone: user.phone,
+        email: user.email,
+        tags: [user.role.name],
+        popularity: user.popularity,
 
-    }
+      }
 
-  ));
+    ));
 
   return (
     <div>
