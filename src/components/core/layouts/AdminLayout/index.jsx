@@ -11,6 +11,7 @@ import DropdownNotification from "../../common/DropdownNotification";
 import { SearchOutlined } from "@ant-design/icons";
 import { Flex, Input } from "antd";
 import * as S from "./AdminLayout.styles";
+import Link from "next/link";
 
 
 const { Content, Sider } = Layout;
@@ -34,6 +35,7 @@ const AdminLayout = ({ children }) => {
       ),
     },
   ];
+ 
 
   return (
     <Layout
