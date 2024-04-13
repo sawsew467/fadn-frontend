@@ -2,6 +2,7 @@ import {
   SettingOutlined,
   HeartOutlined,
   MessageOutlined,
+  QuestionCircleOutlined,
 } from "@ant-design/icons";
 
 export const sidebarAppMenu = [
@@ -37,5 +38,10 @@ export const sidebarAdminMenu = [
     key: "3",
     icon: <SettingOutlined />,
     label: "Quản lý cuộc gọi",
+  },
+  {
+    key: "4",
+    icon: <QuestionCircleOutlined />,
+    label: "Quản lý câu hỏi",
   },
 ];
