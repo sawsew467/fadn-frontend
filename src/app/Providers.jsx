@@ -4,6 +4,7 @@ import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { Provider } from "react-redux";
 import { makeStore } from "@/store";
 import { useRef } from "react";
+import StyledComponentsRegistry from "@/libs/registry";
 
 function Providers({ children }) {
   const storeRef = useRef();
@@ -13,7 +14,9 @@ function Providers({ children }) {
 
   return (
     <Provider store={storeRef.current}>
-      <AntdRegistry>{children}</AntdRegistry>
+      <AntdRegistry>
+        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+      </AntdRegistry>
     </Provider>
   );
 }

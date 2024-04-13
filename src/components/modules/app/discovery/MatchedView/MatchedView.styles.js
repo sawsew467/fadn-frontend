@@ -1,6 +1,6 @@
 import styled, { keyframes, css } from "styled-components";
-import Image from "next/image";
-import { Flex } from "antd";
+// import Image from "next/image";
+import { Flex, Image } from "antd";
 
 const pulseAnimation = keyframes`
   0% {
@@ -70,5 +70,5 @@ export const CardInfo = styled(Flex)`
   font-size: 20px;
   border-radius: 30px;
   color: #fff;
-  backdrop-filter: blur(10px);
+  background-color: #000;
 `;
