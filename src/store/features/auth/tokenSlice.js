@@ -1,13 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 0,
+  value: null,
 };
 
-export const authSlice = createSlice({
-  name: "auth",
-  initialState,
+export const tokenSlice = createSlice({
+  name: "token",
+  initialState: initialState,
   reducers: {
+    setToken: (state, action) => {
+      state.value = action.payload;
+    },
+    clearToken: (state) => {
+      state.value = null;
+    },
+    // Không liên quan dưới này
     increment: (state) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
@@ -25,6 +32,7 @@ export const authSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = authSlice.actions;
-
-export default authSlice.reducer;
+export const { setToken, clearToken, increment, decrement, incrementByAmount } =
+  tokenSlice.actions;
+export const selectToken = (state) => state.token.value;
+export default tokenSlice.reducer;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { validateEmail, validatePassword } from "@/input-validate/index.js";
 
 function AccountDetails({
@@ -18,6 +18,13 @@ function AccountDetails({
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+    setEmail(localStorage.getItem("email"));
+    setPassword(localStorage.getItem("password"));
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("password");
+  }, []);
 
   return (
     <>

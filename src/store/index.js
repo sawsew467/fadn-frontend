@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./features/auth/authSlice";
+import tokenSlice from "./features/auth/tokenSlice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      auth: authSlice,
+      token: tokenSlice,
     },
   });
 };

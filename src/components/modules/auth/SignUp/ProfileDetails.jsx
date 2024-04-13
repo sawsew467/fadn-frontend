@@ -5,11 +5,19 @@ import citiesJson from "./cites.js";
 // Sample cities data
 const cities = citiesJson;
 
-const content = (
+const contentNickname = (
   <div>
     <p style={{ color: "black" }}>
       <i className="fa-solid fa-circle-info"></i> Sử dụng khi bạn không muốn
       hiển thị tên thật của bạn cho bất cứ ai.
+    </p>
+  </div>
+);
+const contentBirthday = (
+  <div>
+    <p style={{ color: "black" }}>
+      <i className="fa-solid fa-circle-info"></i> Một khi bạn đã chọn ngày sinh
+      của mình thì không được sửa lại.
     </p>
   </div>
 );
@@ -74,20 +82,25 @@ export default function ProfileDetails({
 
   function handleCityChange(event) {
     const value = event.target.value;
+    console.log("City onChange: " + value);
     setSelectedCity(value);
     setFilteredCities(filterCities(value));
     setShowDropdown(!!value); // Show dropdown when input is not empty
   }
 
   function handleOptionCityClick(cityName) {
-    setCity(cityName); // set City
+    console.log("City OnClick: " + cityName);
     setCityError({
       status: false,
       message: "",
     });
-    setSelectedCity(cityName);
+    setCity(cityName); // set City
+    // setSelectedCity(cityName);
     setShowDropdown(false);
   }
+  useEffect(() => {
+    setSelectedCity(city);
+  }, [city]);
 
   return (
     <>
@@ -153,7 +166,7 @@ export default function ProfileDetails({
           <label htmlFor="">
             Nickname
             <Popover
-              content={content}
+              content={contentNickname}
               // title="Title"
               trigger="hover"
             >
@@ -209,16 +222,32 @@ export default function ProfileDetails({
         )}
       </div>
       <div className="form-group">
-        <label
-          htmlFor=""
+        <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
           }}
         >
-          Ngày sinh<span style={{ color: "red" }}>*</span>
-        </label>
+          <label htmlFor="">
+            Ngày sinh
+            <Popover
+              content={contentBirthday}
+              // title="Title"
+              trigger="hover"
+            >
+              <i
+                className="fa-solid fa-circle-question"
+                style={{
+                  fontSize: "15px",
+                  color: "gray",
+                  marginLeft: "10px",
+                }}
+              ></i>
+            </Popover>
+          </label>
+          <span style={{ color: "red" }}>*</span>
+        </div>
         <input
           type="date"
           className="my-form-control"
@@ -362,6 +391,7 @@ export default function ProfileDetails({
             >
               <option value={"2"}>Độc thân</option>
               <option value={"1"}>Đã kết hôn</option>
+              <option value={"3"}>Đang trong mối quan hệ</option>
             </select>
           </div>
         </div>
@@ -386,7 +416,7 @@ export default function ProfileDetails({
           id="cityInput"
           className="my-form-control"
           placeholder="Chọn thành phố bạn sinh sống"
-          value={city !== "" ? city : selectedCity}
+          value={selectedCity}
           onChange={handleCityChange}
           onFocus={() => setShowDropdown(!!selectedCity)}
           style={{
