@@ -6,19 +6,22 @@ import {
 
 export const sidebarAppMenu = [
   {
-    key: "1",
+    key: 0,
     icon: <HeartOutlined />,
     label: "Khám phá",
+    href: "/app/",
   },
   {
-    key: "2",
+    key: 1,
     icon: <MessageOutlined />,
     label: "Tin nhắn",
+    href: "/app/messages",
   },
   {
-    key: "3",
+    key: 2,
     icon: <SettingOutlined />,
     label: "Cài đặt",
+    href: "/app/settings",
   },
 ];
 
