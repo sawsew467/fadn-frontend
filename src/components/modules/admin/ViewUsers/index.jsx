@@ -2,24 +2,23 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
 import { useState, useEffect } from 'react';
-import { Space, Table, Tag, Progress, Button, Popconfirm } from 'antd';
+import { Space, Table, Modal, Progress, Button, Popconfirm } from 'antd';
 import Link from 'next/link';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { useParams } from 'next/navigation';
 
 
 export default function Users() {
-    const params = useParams();
     const [users, setUsers] = useState([]);
 
-    console.log(params);
+
     useEffect(() => {
         (async () => {
             const res = await fetch('http://localhost:8088/api/v1/users', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTEzMzAzOTksImV4cCI6MTcxMTQxNjc5OX0.2XAhUW9cR0-mWvmZC_ACi_Mts4GwtUHWSRKhM_jSi7R4qRXv4FJCCzxrsOdh1h4x'
+                    Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwODAwNTQsImV4cCI6MTcxMzE2NjQ1NH0.QiFHv9tB6kWOwqPICmmQBBrfwaNG2_6pfTsd7N8stdMwvYpa7srXB9qcY9H8WSLd '
                 }
             })
             const data = await res.json()
@@ -27,6 +26,7 @@ export default function Users() {
             setUsers(data);
         })();
     }, []);
+
 
     const calculateAge = (dob) => {
         const today = new Date();
@@ -78,6 +78,11 @@ export default function Users() {
             key: 'email',
         },
         {
+            title: 'City',
+            dataIndex: 'city',
+            key: 'city',
+        },
+        {
             title: 'Action',
             key: 'action',
             render: (_, record) => {
@@ -90,7 +95,12 @@ export default function Users() {
                         >
                             <Button type='primary' danger>Ban</Button>
                         </Popconfirm>
-                        <Button type='primary' secondary>Phân quyền</Button>
+                        <Button type='primary' secondary>Block</Button>
+                        <Button type='primary' >Phân quyền</Button>
+
+                        {/* <Button type='primary' secondary>Admin</Button>
+                        <Button type='primary' secondary>Upgrade to premium</Button> */}
+
                     </Space>
                 )
             },
@@ -105,8 +115,13 @@ export default function Users() {
             age: calculateAge(user?.dob),
             phone: user?.phone,
             email: user?.email,
+            city: user?.city,
             popularity: user?.popularity,
         }));
+
+
+
+
 
 
     return (

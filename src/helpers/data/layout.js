@@ -1,23 +1,28 @@
-import { SettingOutlined, HeartOutlined, MessageOutlined, PieChartFilled } from "@ant-design/icons";
-import Link from "next/link";
+import { SettingOutlined, HeartOutlined, MessageOutlined, PieChartOutlined } from "@ant-design/icons";
+
+
 
 export const sidebarAdminMenu = [
+
   {
     key: "1",
-    icon: <PieChartFilled />,
+    icon: <PieChartOutlined />,
     label: "Thống kê",
+    href: "/admin/",
   },
   {
     key: "2",
     icon: <MessageOutlined />,
     label: "Quản lý người dùng",
-    link: "/admin/users"
+    href: "/admin/users"
   },
   {
     key: "3",
     icon: <SettingOutlined />,
     label: "Quản lý cuộc gọi",
-    link: "/admin/CallManagement"
+    href: "/admin/CallManagement"
   },
 ];
+
+
 

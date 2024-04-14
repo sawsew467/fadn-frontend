@@ -11,7 +11,8 @@ import DropdownNotification from "../../common/DropdownNotification";
 import { SearchOutlined } from "@ant-design/icons";
 import { Flex, Input } from "antd";
 import * as S from "./AdminLayout.styles";
-import Link from "next/link";
+
+
 
 
 const { Content, Sider } = Layout;
@@ -21,6 +22,9 @@ const AdminLayout = ({ children }) => {
   const handleLogout = () => {
     //
   };
+  const handleItemClick = (item) => {
+    router.push(item?.href);
+  }
   const items = [
     {
       key: "1",
@@ -35,7 +39,7 @@ const AdminLayout = ({ children }) => {
       ),
     },
   ];
- 
+
 
   return (
     <Layout
@@ -66,6 +70,16 @@ const AdminLayout = ({ children }) => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={sidebarAdminMenu}
+
+          onClick={(e) => {
+            sidebarAdminMenu.map((item) => {
+              if (item.key == e.key) {
+                // console.log(e)
+                // console.log(item?.href)
+                router.push(item?.href)
+              }
+            })
+          }}
         />
       </Sider>
 
