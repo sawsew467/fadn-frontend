@@ -39,7 +39,7 @@ export default function Users() {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTk0MzEsImV4cCI6MTcxMzE4NTgzMX0.h4F1gVuGAxUgIh0CdXCCw0U-UvuexexnO_lI2RILleS-nLSv_yOsflNnFj8l_2zn'
+                        Authorization: 'Bearer' + TOKEN
                     }
                 });
                 const data = await res.json()
@@ -54,7 +54,7 @@ export default function Users() {
         //         method: 'DELETE',
         //         headers: {
         //             'Content-Type': 'application/json',
-        //             Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTk0MzEsImV4cCI6MTcxMzE4NTgzMX0.h4F1gVuGAxUgIh0CdXCCw0U-UvuexexnO_lI2RILleS-nLSv_yOsflNnFj8l_2zn'
+        //             Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMxMDYzMjcsImV4cCI6MTcxMzE5MjcyN30.Sk5MiSK47BVPihV5lnSDYDORAXuxkW0gvsQjfWrKPiLtkLsBqzTqEASi7ayUIktl'
         //         }
         //     });
 

@@ -6,13 +6,12 @@ import { CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import './Membership.css';
 
 function Checkout() {
-
-
+    const [userId, setUserId] = useState(null);
     const handleUpdateRole = async (roleId, roleName) => {
         const TOKEN = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
         try {
-            const res = await fetch( "http://localhost:8088/api/v1/users/" + userId, {
+            const res = await fetch("http://localhost:8088/api/v1/users/" + userId, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,6 +30,30 @@ function Checkout() {
             console.error('Error updating role:', error);
         }
     };
+
+    // const handleUpdateRole = async (roleId, roleName) => {
+    //     // const TOKEN = localStorage.getItem("token");
+    //     // const userId = localStorage.getItem("userId");
+    //     try {
+    //         const res = await fetch(`http://localhost:8088/api/v1/users/2`, {
+    //             method: 'PATCH',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlhdCI6MTcxMzEwNzYyNSwiZXhwIjoxNzEzMTk0MDI1fQ.XFgRSIM8MhNUj-o4-W9ylUOiOlmQiG9NxvwU_FLQMksIPMPfQ8ECZ3j0X4s5x02U'
+    //             },
+    //             body: JSON.stringify({ roleDTO: { id: roleId, name: roleName } })
+    //         });
+
+    //         if (res.ok) {
+    //             console.log('Role updated successfully');
+    //             // Fetch updated user data or update state as needed
+    //         } else {
+    //             console.error('Error updating role:', res.status);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error updating role:', error);
+    //     }
+    // };
 
     const [selectedPackage, setSelectedPackage] = useState(null);
     const [openIndex, setOpenIndex] = useState(null);
@@ -51,10 +74,10 @@ function Checkout() {
 
     const handleCheckPayment = async () => {
         try {
-            const { transactionId, packageID, userId } = selectedPackage;
+            const { transactionId, packageID } = selectedPackage;
             console.log('transactionId:', transactionId);
             console.log('packageID:', packageID);
-            console.log('userId:', userId);
+            // console.log('userId:', userId);
 
             const res = await fetch("https://script.googleusercontent.com/macros/echo?user_content_key=gu0rvWkjRiBz7aHxAG-t0uugWwE7Ip96RNCk04RhIsQ8qVY125kNFgludh_t2LQHYAX-iq9ghLAK190GqY5o9yWa-3ENvbeYm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnP8r1i41gogCMRogJ02gGOAEdNA7yNbahg9KAxltZVNr-2qpx41piAgpIUr6JiB7XI3HJzXPyBIPaQpJO81SUuLyN-I1pD1G-A&lib=MMU0zSUGcEptCk2FOruXqY9Sg-WSom66q");
             const data = await res.json();
@@ -66,27 +89,27 @@ function Checkout() {
             if (lastTransactionId.includes(transactionId)) {
                 switch (packageID) {
                     case "PACKAGE001":
-                        alert("Thanh toán thành công");
-                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
-                        handleUpdateRole(userId, "2", "PREMIUM");
+                        alert("Thanh toán không thành công");
+                        setPaymentStatus(<CloseCircleOutlined className="check-circle" style={{ color: "red" }} />);
+                        handleUpdateRole("2", "PREMIUM");
                         break;
                     case "PACKAGE002":
-                        alert("Thanh toán thành công");
-                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
-                        handleUpdateRole(userId, "2", "PREMIUM");
+                        alert("Thanh toán không thành công");
+                        setPaymentStatus(<CloseCircleOutlined className="check-circle" style={{ color: "red" }} />);
+                        handleUpdateRole("2", "PREMIUM");
                         break;
                     case "PACKAGE003":
-                        alert("Thanh toán thành công");
-                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
-                        handleUpdateRole(userId, "2", "PREMIUM");
+                        alert("Thanh toán không thành công");
+                        setPaymentStatus(<CloseCircleOutlined className="check-circle" style={{ color: "red" }} />);
+                        handleUpdateRole("2", "PREMIUM");
                         break;
                     default:
                         alert("Thanh toán thành công");
                 }
             } else {
-                alert("Thanh toán không thành công");
-                setPaymentStatus(<CloseCircleOutlined className="close-circle" style={{ color: "red" }} />);
-                console.log("Thanh toán không thành công");
+                alert("Thanh toán thành công");
+                setPaymentStatus(<CheckCircleOutlined className="close-circle" style={{ color: "#35ff35" }} />);
+                console.log("Thanh toán thành công");
             }
         } catch (error) {
             console.log("Lỗi khi kiểm tra thanh toán:", error);
@@ -201,7 +224,7 @@ function Checkout() {
                                         <div className="package_qr">
                                             <img src={selectedPackage.packageQR} style={{ margin: '1rem', width: '17rem' }} />
                                             <p>Mã giao dịch: {selectedPackage.transactionId}</p>
-                                            <p>Số tiền: {selectedPackage.packagePrice}</p>
+                                            <p style={{ marginBottom: "10px" }}>Số tiền: {selectedPackage.packagePrice}</p>
                                             <Button
                                                 style={{
                                                     height: 'auto',
@@ -232,18 +255,6 @@ function Checkout() {
                     </div>
                 </div>
                 <div className="pricing-plans">
-                    <img
-                        className="shape1"
-                        src="/pageImages/join/heartshape.png"
-                        alt=""
-                    />
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-12">
-                                <a></a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
             {/* ==========Membership-Section========== */}
