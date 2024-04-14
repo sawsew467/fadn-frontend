@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import citiesJson from "@/components/modules/auth/SignUp/cites";
 import { Skeleton } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, message, Upload } from "antd";
+import { Button, message, Upload, Spin } from "antd";
 import { Space } from "antd";
 import {
   validateName,
@@ -17,11 +17,14 @@ import {
   validateLookingFor,
   validateStatus,
 } from "@/input-validate/index.js";
+import UpdateLoading from "@/components/modules/profile/UpdateLoading";
 
 // Sample cities data
 const cities = citiesJson;
 
 const initialUser = {
+  id: "",
+  interestGenderId: "",
   firstname: "",
   lastname: "",
   nickname: "",
@@ -113,21 +116,10 @@ export default function ProfilePage() {
   const [userData, setUserData] = useState(null);
   const [avatarUrlLoading, setAvatarUrlLoading] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [spinning, setSpinning] = useState(false);
 
   const [userUpdated, setUserUpdated] = useState(initialUser);
-  // firstname: "",
-  // lastname: "",
-  // nickname: "",
-  // gender: "",
-  // status: "",
-  // email: "",
-  // phone: "",
-  // city: "",
-  // avatar: "",
-  // intro: "",
-  // hobbies: "",
-  // workAt: "",
-  // genderLookingFor: "",
+
   const [firstnameError, setFirstnameError] = useState({
     status: false,
     message: "",
@@ -196,65 +188,48 @@ export default function ProfilePage() {
   // fetch user data
   useEffect(() => {
     const TOKEN = localStorage.getItem("token");
+    const EMAIL = localStorage.getItem("email");
+
     (async () => {
-      const res = await fetch("http://localhost:8080/api/v1/users/3", {
-        method: "GET",
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJub3JlcGx5LmFuZC5zdWJzY3JpYmU5OTlAZ21haWwuY29tIiwiaWF0IjoxNzEyOTc2MTU3LCJleHAiOjE3MTMwNjI1NTd9.aykvI4KHqYffZv6DoxsHYhv4RYpZ4-oWl6e1-3NbF2w15L-5UIOAT2FtJRLnWLEv",
-          "Content-Type": "application/json",
-        },
-        redirect: "follow",
-        credentials: "include",
-      }).catch((error) => {
+      const res = await fetch(
+        "http://localhost:8080/api/v1/users/email/" + EMAIL,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + TOKEN,
+          },
+        }
+      ).catch((error) => {
         console.log(error);
       });
 
       const data = await res.json();
-      // setUserData(data);
+      setUserData(data);
+      localStorage.setItem("userId", data.id);
       console.log(data);
-      // setAvatarUrl(data?.profileDTO?.avatar);
-      // setUserUpdated({
-      //   ...userUpdated,
-      //   firstname: data.firstName,
-      //   lastname: data.lastName,
-      //   nickname: data.nickname,
-      //   gender: data.genderDTO.id,
-      //   status: data.statusDTO.id,
-      //   email: data.email,
-      //   phone: data.phone,
-      //   city: data.city,
-      //   avatar: data.profileDTO.avatar,
-      //   intro: data.profileDTO.intro,
-      //   hobbies: data.profileDTO.hobbies,
-      //   workAt: data.profileDTO.workAt,
-      //   genderLookingFor: data.interestGenders[0].genderDTO.id,
-      // });
+      setAvatarUrl(data?.profileDTO?.avatar);
+      setUserUpdated({
+        ...userUpdated,
+        id: data.id,
+        interestGenderId: data.interestGenders[0]?.id,
+        firstname: data.firstName,
+        lastname: data.lastName,
+        nickname: data.nickname,
+        gender: data.genderDTO.id,
+        status: data.statusDTO.id,
+        email: data.email,
+        phone: data.phone,
+        // dob (birthday) không được update!
+        city: data.city,
+        avatar: data.profileDTO?.avatar,
+        intro: data.profileDTO?.intro,
+        hobbies: data.profileDTO?.hobbies,
+        workAt: data.profileDTO?.workAt,
+        genderLookingFor: data.interestGenders[0]?.genderDTO.id,
+      });
       setLoading(false); // Tắt hiệu ứng Skeleton
     })();
   }, []);
-
-  // useEffect(() => {
-  //   const TOKEN = localStorage.getItem("token");
-  //   (async () => {
-  //     const res = await fetch("http://localhost:8080/api/v1/users/3", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjk3Mjc0OSwiZXhwIjoxNzEzMDU5MTQ5fQ.MxAE4XQaXqI7_XlFYAbPoNrZJoEwfOqFJsSMJWfUC9jWSBJYcfXr6r8oBn_3DU3R",
-  //         "Content-Type": "application/json",
-  //       },
-  //       // redirect: "follow",
-  //       // credentials: "include",
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-
-  //     const data = await res.json();
-  //     // setUserData(data);
-  //     console.log(data);
-  //   })();
-  // }, []);
 
   // handle error input
   const handleFirstNameChange = (event) => {
@@ -294,18 +269,18 @@ export default function ProfilePage() {
     });
   };
   const handleNickNameChange = (event) => {
-    const validNickName = validateName(event.target.value);
-    if (!validNickName.valid) {
-      setNicknameError({
-        status: true,
-        message: validNickName.message,
-      });
-    } else {
-      setNicknameError({
-        status: false,
-        message: "",
-      });
-    }
+    // const validNickName = validateName(event.target.value);
+    // if (!validNickName.valid) {
+    //   setNicknameError({
+    //     status: true,
+    //     message: validNickName.message,
+    //   });
+    // } else {
+    //   setNicknameError({
+    //     status: false,
+    //     message: "",
+    //   });
+    // }
     setUserUpdated({
       ...userUpdated,
       nickname: event.target.value,
@@ -477,26 +452,17 @@ export default function ProfilePage() {
     ) {
       console.log("Vui lòng điền thông tin cần thiếu.");
     } else {
-      console.log("Updated thành công.");
+      console.log("Điền thông tin đầy đủ.");
     }
   };
   // post user updated
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // firstname: "",
-    // lastname: "",
-    // nickname: "",
-    // gender: "",
-    // status: "",
-    // email: "",
-    // phone: "",
-    // city: "",
-    // avatar: "",
-    // intro: "",
-    // hobbies: "",
-    // workAt: "",
-    // genderLookingFor: "",
+
     checkInputBeforeUpdate();
+
+    setSpinning(true);
+
     const formUserUpdatedData = {
       firstName: userUpdated.firstname,
       lastName: userUpdated.lastname,
@@ -525,11 +491,98 @@ export default function ProfilePage() {
     };
 
     console.log(formUserUpdatedData, formInterestGenderData);
+
+    const TOKEN = localStorage.getItem("token");
+    const EMAIL = localStorage.getItem("email");
+    const userId = localStorage.getItem("userId");
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/users/" + userId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + TOKEN,
+          },
+          body: JSON.stringify(formUserUpdatedData),
+        }
+      );
+
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      if (
+        responseData?.statusCode === 208 &&
+        responseData?.message === "Your phone is already registered."
+      ) {
+        setPhoneError({
+          status: true,
+          message: "Số điện thoại của bạn đã được sử dụng.",
+        });
+        setSpinning(false);
+        return;
+      }
+      if (
+        responseData?.statusCode === 208 &&
+        responseData?.message === "Your nickname is already registered."
+      ) {
+        setNicknameError({
+          status: true,
+          message: "Nickname của bạn đã được sử dụng.",
+        });
+        setSpinning(false);
+        return;
+      }
+
+      console.log("User sau khi update:", responseData);
+
+      setSpinning(false);
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/users/" +
+          userId +
+          "/interest-gender/" +
+          userUpdated.interestGenderId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + TOKEN,
+          },
+          body: JSON.stringify(formInterestGenderData),
+        }
+      );
+
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      console.log("User InterestGender sau khi update:", responseData);
+
+      setSpinning(false);
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
+
+    successMessage("Bạn đã cập nhật profile thành công.");
+    setPhoneError({
+      status: false,
+      message: "",
+    });
+    setNicknameError({
+      status: false,
+      message: "",
+    });
   };
 
   return (
     <>
       {contextHolder}
+      <Spin spinning={spinning} fullscreen />
       <div className="page-title">Thông tin cá nhân</div>
       <form onSubmit={handleSubmit}>
         <div className="row">
@@ -616,6 +669,10 @@ export default function ProfilePage() {
                 <button
                   onClick={() => {
                     setAvatarUrl("");
+                    setUserUpdated({
+                      ...userUpdated,
+                      avatar: "",
+                    });
                   }}
                   name="file-input"
                   id="file-input"
@@ -647,34 +704,7 @@ export default function ProfilePage() {
                     <span>Xóa avatar</span>
                   </label>
                 </button>
-                {/* <label
-                className="file-input-delete__label"
-                htmlFor="file-input-delete"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  x="0px"
-                  y="0px"
-                  width="100"
-                  height="100"
-                  viewBox="0 0 24 24"
-                  style={{ width: "fit-content", color: "white" }}
-                >
-                  <path
-                    d="M 10.806641 2 C 10.289641 2 9.7956875 2.2043125 9.4296875 2.5703125 L 9 3 L 4 3 A 1.0001 1.0001 0 1 0 4 5 L 20 5 A 1.0001 1.0001 0 1 0 20 3 L 15 3 L 14.570312 2.5703125 C 14.205312 2.2043125 13.710359 2 13.193359 2 L 10.806641 2 z M 4.3652344 7 L 5.8925781 20.263672 C 6.0245781 21.253672 6.877 22 7.875 22 L 16.123047 22 C 17.121047 22 17.974422 21.254859 18.107422 20.255859 L 19.634766 7 L 4.3652344 7 z"
-                    style={{ color: "white" }}
-                  ></path>
-                </svg>
-                <span>Xóa avatar</span>
-              </label> */}
               </div>
-              {/* <div className="icon">
-              <i className="fas fa-image"></i>
-            </div>
-            <div className="content">
-              <h4>Change Cover</h4>
-              <span>1200x300p size minimum</span>
-            </div> */}
             </div>
           </div>
         </div>
@@ -696,11 +726,7 @@ export default function ProfilePage() {
                     <input
                       type="text"
                       placeholder="Tên của bạn"
-                      defaultValue={
-                        userUpdated?.firstname
-                          ? userUpdated?.firstname
-                          : userData?.firstName
-                      }
+                      defaultValue={userData ? userData?.firstName : ""}
                       onChange={handleFirstNameChange}
                       style={{
                         border: firstnameError?.status ? "1px solid red" : "",
@@ -783,6 +809,7 @@ export default function ProfilePage() {
                       style={{
                         border: emailError?.status ? "1px solid red" : "",
                       }}
+                      readOnly
                     />
                   )}
                   {emailError?.status && (
@@ -834,6 +861,12 @@ export default function ProfilePage() {
                       style={{
                         border: genderError?.status ? "1px solid red" : "",
                       }}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          gender: event.target.value,
+                        });
+                      }}
                     >
                       <option
                         value="1"
@@ -878,6 +911,12 @@ export default function ProfilePage() {
                         border: genderLookingForError?.status
                           ? "1px solid red"
                           : "",
+                      }}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          genderLookingFor: event.target.value,
+                        });
                       }}
                     >
                       <option
@@ -932,6 +971,12 @@ export default function ProfilePage() {
                       defaultValue={userData?.statusDTO?.id}
                       style={{
                         border: statusError?.status ? "1px solid red" : "",
+                      }}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          status: event.target.value,
+                        });
                       }}
                     >
                       <option
@@ -1019,9 +1064,14 @@ export default function ProfilePage() {
                       type="text"
                       placeholder="Nghề nghiệp của bạn"
                       defaultValue={userData?.profileDTO?.workAt}
-                      onChange={(e) => console.log(e.target.value)}
                       style={{
                         border: workAtError?.status ? "1px solid red" : "",
+                      }}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          workAt: event.target.value,
+                        });
                       }}
                     />
                   )}
@@ -1047,6 +1097,12 @@ export default function ProfilePage() {
                         border: hobbiesError?.status ? "1px solid red" : "",
                       }}
                       defaultValue={userData?.profileDTO?.hobbies}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          hobbies: event.target.value,
+                        });
+                      }}
                     ></textarea>
                   )}
                 </div>
@@ -1071,6 +1127,12 @@ export default function ProfilePage() {
                         border: hobbiesError?.status ? "1px solid red" : "",
                       }}
                       defaultValue={userData?.profileDTO?.intro}
+                      onChange={(event) => {
+                        setUserUpdated({
+                          ...userUpdated,
+                          intro: event.target.value,
+                        });
+                      }}
                     ></textarea>
                   )}
                 </div>

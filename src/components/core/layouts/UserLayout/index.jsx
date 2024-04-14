@@ -16,24 +16,9 @@ import BreadcrumbUser from "./BreadcrumbUser";
 import Side from "./Side";
 
 import { redirect, useRouter } from "next/navigation";
-import { useAppSelector } from "@/hooks/useRedux";
-import { selectToken } from "@/store/features/auth/tokenSlice";
 
 function UserLayout({ children }) {
   const router = useRouter();
-  const token = useAppSelector(selectToken);
-
-  // if (typeof window !== "undefined") {
-  //   // Perform localStorage action
-  //   const token = localStorage.getItem("token");
-  //   // Kiểm tra xem người dùng đã xác thực hay chưa
-  //   if (token === null) {
-  //     // Nếu chưa xác thực, chuyển hướng về trang đăng nhập
-  //     console.log("TOKEN Ở ĐÂY");
-  //   } else {
-  //     redirect("/login");
-  //   }
-  // }
 
   useEffect(() => {
     const token = localStorage.getItem("token");

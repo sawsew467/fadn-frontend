@@ -57,12 +57,6 @@ function Login() {
           credentials: "include",
         });
 
-        if (res.redirected) {
-          // document.location = res.url;
-          router.push("/register");
-          console.log("first redirect");
-        }
-
         const data = await res.json();
         if (data?.statusCode == 403) {
         } else {
@@ -109,6 +103,7 @@ function Login() {
     }
 
     if (!hasError) {
+      localStorage.setItem("email", email);
       const postData = {
         email: email,
         password: password,

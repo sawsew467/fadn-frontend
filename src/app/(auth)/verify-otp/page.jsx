@@ -6,7 +6,7 @@ import "@/styles/css/responsive.css";
 import { useRouter } from "next/navigation";
 
 import { useEffect, useState } from "react";
-import { Button, message, Space } from "antd";
+import { Button, message, Space, Spin } from "antd";
 
 export default function ModalOtp() {
   useEffect(() => {
@@ -88,17 +88,55 @@ export default function ModalOtp() {
 
   const [messageApi, contextHolder] = message.useMessage();
 
-  const success = () => {
+  const success = (message) => {
     messageApi.open({
       type: "success",
-      content: <p style={{ color: "black" }}>Xác nhận OTP thành công!</p>,
+      content: <p style={{ color: "black" }}>{message}</p>,
     });
   };
-  const error = () => {
+  const error = (message) => {
     messageApi.open({
       type: "error",
-      content: <p style={{ color: "black" }}>Bạn đã nhập sai OTP!</p>,
+      content: <p style={{ color: "black" }}>{message}</p>,
     });
+  };
+
+  const [spinning, setSpinning] = useState(false);
+  const handleSendEmailOTP = async () => {
+    setSpinning(true);
+    const codeOtp = Math.floor(111111 + Math.random() * (999999 - 111111 + 1));
+    localStorage.setItem("otpCode", codeOtp);
+    const email = localStorage.getItem("email");
+
+    const postData = {
+      recipient: email,
+      subject: "Cupid Dating Verification Email",
+      message: codeOtp,
+    };
+
+    try {
+      // Thực hiện POST API bằng fetch
+      const response = await fetch(
+        "http://localhost:8080/api/v1/send-mail-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
+
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      console.log("Response từ API:", responseData);
+
+      setSpinning(false);
+      success("Đã gửi lại OTP thành công!");
+      return true;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Hàm xử lý khi người dùng thay đổi giá trị của ô input
@@ -117,17 +155,18 @@ export default function ModalOtp() {
     const otpCode = localStorage.getItem("otpCode");
 
     if (otpCodeEntered === otpCode) {
-      success();
+      success("Xác nhận OTP thành công!");
       localStorage.setItem("verify-otp", "success");
       router.back();
     } else {
-      error();
+      error("Bạn đã nhập sai OTP!");
     }
   };
 
   return (
     <>
       {contextHolder}
+      <Spin spinning={spinning} fullscreen />
       <div className="row justify-content-center">
         <div className="col-12 col-md-6 col-lg-4" style={{ minWidth: "500px" }}>
           <div
@@ -191,7 +230,10 @@ export default function ModalOtp() {
 
               <p className="resend text-muted mb-0">
                 Không nhận được mã OTP?{" "}
-                <a href="" style={{ textDecoration: "none" }}>
+                <a
+                  style={{ textDecoration: "none", cursor: "pointer" }}
+                  onClick={handleSendEmailOTP}
+                >
                   Gửi lại
                 </a>
               </p>

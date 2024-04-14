@@ -21,64 +21,9 @@ import {
   validateLookingFor,
   validateStatus,
 } from "@/input-validate/index.js";
-import { useAppDispatch } from "@/hooks/useRedux";
-import { setToken } from "@/store/features/auth/tokenSlice";
-import ModalOtp from "@/components/modules/auth/SignUp/ModalOtp";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const modal = {
-  title: <h4 className="title">Bạn nhớ kiểm tra email của mình nha!</h4>,
-  content: (
-    <div
-      className="modal fade show"
-      id="email-confirm"
-      tabindex="-1"
-      style={{ display: "block", position: "relative" }}
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-body">
-            <div className="top-img">
-              <img src="/pageImages/c-image.png" alt="" />
-            </div>
-            <div className="main-content">
-              {/* <h4 className="title">Check Your Inbox, Please!</h4> */}
-              <p>
-                Một liên kết để xác minh tài khoản đã được gửi đến email được
-                cung cấp. Vui lòng mở liên kết và làm theo lời nhắc để xác minh
-                email.
-              </p>
-              <p className="send-again">
-                Không nhận được email? <a href="#">Gửi lại</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-};
-
 function Register() {
-  const [open, setOpen] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Content of the modal");
-  const showModal = () => {
-    setOpen(true);
-  };
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setOpen(false);
-  };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -134,24 +79,24 @@ function Register() {
     message: "",
   });
 
-  useEffect(() => {
-    const userGoogleJSON = localStorage.getItem("userGoogle");
-    const userObject = JSON.parse(userGoogleJSON);
-    if (userObject) {
-      console.log(userObject);
-      setEmail(userObject.email);
-      setPassword(userObject.email); // password is email
-      setFirstname(userObject.given_name);
-      setLastname(userObject.family_name);
-      localStorage.removeItem("userGoogle");
-    } else {
-      setEmail("");
-      setPassword(""); // password is email
-      setFirstname("");
-      setLastname("");
-      console.log("Không tìm thấy userObject trong localStorage");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userGoogleJSON = localStorage.getItem("userGoogle");
+  //   const userObject = JSON.parse(userGoogleJSON);
+  //   if (userObject) {
+  //     console.log(userObject);
+  //     setEmail(userObject.email);
+  //     setPassword(userObject.email); // password is email
+  //     setFirstname(userObject.given_name);
+  //     setLastname(userObject.family_name);
+  //     localStorage.removeItem("userGoogle");
+  //   } else {
+  //     setEmail("");
+  //     setPassword(""); // password is email
+  //     setFirstname("");
+  //     setLastname("");
+  //     console.log("Không tìm thấy userObject trong localStorage");
+  //   }
+  // }, []);
 
   // --------------------------------------------
   const handleEmailChange = (event) => {
@@ -215,18 +160,18 @@ function Register() {
     setLastname(event.target.value);
   };
   const handleNickNameChange = (event) => {
-    const validNickName = validateName(event.target.value);
-    if (!validNickName.valid) {
-      setNicknameError({
-        status: true,
-        message: validNickName.message,
-      });
-    } else {
-      setNicknameError({
-        status: false,
-        message: "",
-      });
-    }
+    // const validNickName = validateName(event.target.value);
+    // if (!validNickName.valid) {
+    //   setNicknameError({
+    //     status: true,
+    //     message: validNickName.message,
+    //   });
+    // } else {
+    //   setNicknameError({
+    //     status: false,
+    //     message: "",
+    //   });
+    // }
     setNickname(event.target.value);
   };
   const handlePhoneChange = (event) => {
@@ -304,6 +249,7 @@ function Register() {
           setPasswordError={setPasswordError}
           handleEmailChange={handleEmailChange}
           handlePasswordChange={handlePasswordChange}
+          onlyRead={false}
         />
       ),
     },
@@ -354,6 +300,7 @@ function Register() {
           handleBirthdayChange={handleBirthdayChange}
           handleGenderChange={handleGenderChange}
           handleGenderLookingForChange={handleGenderLookingForChange}
+          onlyRead={false}
         />
       ),
     },
@@ -372,6 +319,7 @@ function Register() {
             setPasswordError={setPasswordError}
             handleEmailChange={handleEmailChange}
             handlePasswordChange={handlePasswordChange}
+            onlyRead={true}
           />
           <ProfileDetails
             firstname={firstname}
@@ -417,6 +365,7 @@ function Register() {
             handleBirthdayChange={handleBirthdayChange}
             handleGenderChange={handleGenderChange}
             handleGenderLookingForChange={handleGenderLookingForChange}
+            onlyRead={true}
           />
         </>
       ),
@@ -426,9 +375,7 @@ function Register() {
 
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
-  const dispatch = useAppDispatch();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
     console.log(localStorage.getItem("verify-otp"));
@@ -497,24 +444,24 @@ function Register() {
           hasErrorStep2 = true;
         }
       });
-      console.log("------------------------------------------");
-      console.log("birthday: " + birthday);
-      console.log("gender: " + gender);
-      console.log("genderLookingFor: " + genderLookingFor);
-      console.log("Status: " + status);
-      console.log("city: " + city);
-      console.log(
-        hasErrorStep2,
-        firstnameError.status,
-        lastnameError.status,
-        nicknameError.status,
-        phoneError.status,
-        birthdayError.status, // false -> oke
-        gender === "",
-        genderLookingFor === "",
-        status === "",
-        city === ""
-      );
+      // console.log("------------------------------------------");
+      // console.log("birthday: " + birthday);
+      // console.log("gender: " + gender);
+      // console.log("genderLookingFor: " + genderLookingFor);
+      // console.log("Status: " + status);
+      // console.log("city: " + city);
+      // console.log(
+      //   hasErrorStep2,
+      //   firstnameError.status,
+      //   lastnameError.status,
+      //   nicknameError.status,
+      //   phoneError.status,
+      //   birthdayError.status, // false -> oke
+      //   gender === "",
+      //   genderLookingFor === "",
+      //   status === "",
+      //   city === ""
+      // );
       if (
         hasErrorStep2 ||
         firstnameError.status ||
@@ -601,31 +548,10 @@ function Register() {
     }
   };
 
-  // useEffect(() => {
-  //   const TOKEN = localStorage.getItem("token");
-  //   (async () => {
-  //     const res = await fetch("http://localhost:8080/api/v1/users/3", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization:
-  //           "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyQGdtYWlsLmNvbSIsImlhdCI6MTcxMjk3Mjc0OSwiZXhwIjoxNzEzMDU5MTQ5fQ.MxAE4XQaXqI7_XlFYAbPoNrZJoEwfOqFJsSMJWfUC9jWSBJYcfXr6r8oBn_3DU3R",
-  //         "Content-Type": "application/json",
-  //       },
-  //       // redirect: "follow",
-  //       // credentials: "include",
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-
-  //     const data = await res.json();
-  //     // setUserData(data);
-  //     console.log(data);
-  //   })();
-  // }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setSpinning(true);
     const postData = {
       userDTO: {
         firstName: firstname,
@@ -677,13 +603,12 @@ function Register() {
 
       // Lưu token vào Local Storage
       localStorage.setItem("token", responseData.token);
-      // Dispatch action để lưu token vào Redux store
-      dispatch(setToken(responseData.token));
-      localStorage.removeItem("email");
+
+      // localStorage.removeItem("email");
       localStorage.removeItem("password");
       localStorage.removeItem("otpCode");
-      // Modal thông báo confirm đã gửi email
-      // Modal.success(modal);
+      setSpinning(false);
+      router.push("/profile");
     } catch (error) {
       console.error(error);
       // Hiển thị thông báo lỗi cho người dùng nếu cần

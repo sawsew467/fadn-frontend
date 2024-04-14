@@ -66,6 +66,7 @@ export default function ProfileDetails({
   handleBirthdayChange,
   handleGenderChange,
   handleGenderLookingForChange,
+  onlyRead,
 }) {
   const [selectedCity, setSelectedCity] = useState("");
   const [filteredCities, setFilteredCities] = useState({
@@ -125,6 +126,7 @@ export default function ProfileDetails({
           style={{
             border: firstnameError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {firstnameError?.status && (
           <p style={{ color: "red" }}>{firstnameError?.message}</p>
@@ -150,6 +152,7 @@ export default function ProfileDetails({
           style={{
             border: lastnameError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {lastnameError?.status && (
           <p style={{ color: "red" }}>{lastnameError?.message}</p>
@@ -191,6 +194,7 @@ export default function ProfileDetails({
           style={{
             border: nicknameError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {nicknameError?.status && (
           <p style={{ color: "red" }}>{nicknameError?.message}</p>
@@ -216,6 +220,7 @@ export default function ProfileDetails({
           style={{
             border: phoneError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {phoneError?.status && (
           <p style={{ color: "red" }}>{phoneError?.message}</p>
@@ -256,6 +261,7 @@ export default function ProfileDetails({
           style={{
             border: birthdayError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {birthdayError?.status && (
           <p style={{ color: "red" }}>{birthdayError?.message}</p>
@@ -286,6 +292,7 @@ export default function ProfileDetails({
               value="1"
               onChange={handleGenderChange}
               checked={gender === "1"}
+              disabled={onlyRead}
             />
             <label htmlFor="male">Nam</label>
           </div>
@@ -297,6 +304,7 @@ export default function ProfileDetails({
               value="2"
               onChange={handleGenderChange}
               checked={gender === "2"}
+              disabled={onlyRead}
             />
             <label htmlFor="female">Nữ</label>
           </div>
@@ -308,6 +316,7 @@ export default function ProfileDetails({
               value="3"
               onChange={handleGenderChange}
               checked={gender === "3"}
+              disabled={onlyRead}
             />
             <label htmlFor="non-binary">Phi nhị giới</label>
           </div>
@@ -341,6 +350,7 @@ export default function ProfileDetails({
               value="1"
               onChange={handleGenderLookingForChange}
               checked={genderLookingFor === "1"}
+              disabled={onlyRead}
             />
             <label htmlFor="maleLookingFor">Nam</label>
           </div>
@@ -352,6 +362,7 @@ export default function ProfileDetails({
               value="2"
               onChange={handleGenderLookingForChange}
               checked={genderLookingFor === "2"}
+              disabled={onlyRead}
             />
             <label htmlFor="femaleLookingFor">Nữ</label>
           </div>
@@ -388,6 +399,7 @@ export default function ProfileDetails({
               }}
               value={status !== "" ? status : "2"}
               onChange={(event) => setStatus(event.target.value)}
+              disabled={onlyRead}
             >
               <option value={"2"}>Độc thân</option>
               <option value={"1"}>Đã kết hôn</option>
@@ -422,20 +434,23 @@ export default function ProfileDetails({
           style={{
             border: cityError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
-        {showDropdown && (
-          <ul className="dropdown">
-            {filteredCities.map((city, index) => (
-              <li
-                className="li"
-                key={index}
-                onClick={() => handleOptionCityClick(city.name)}
-              >
-                {city.name}
-              </li>
-            ))}
-          </ul>
-        )}
+        {!onlyRead
+          ? showDropdown && (
+              <ul className="dropdown">
+                {filteredCities.map((city, index) => (
+                  <li
+                    className="li"
+                    key={index}
+                    onClick={() => handleOptionCityClick(city.name)}
+                  >
+                    {city.name}
+                  </li>
+                ))}
+              </ul>
+            )
+          : ""}
         {cityError?.status && (
           <p style={{ color: "red" }}>{cityError?.message}</p>
         )}

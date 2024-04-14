@@ -3,23 +3,32 @@
 import { useState } from "react";
 import { Flex } from "antd";
 import { HeartFilled } from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Card from "./Card";
 import Button from "@/components/core/common/Button";
 
+import { authToken, createMeeting } from "@/libs/react-video/api";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+
 import * as S from "./MatchedView.styles";
+import { actionChangeMeetingId } from "@/store/features/app/appSlice";
 
 function MatchedView() {
+  const searchParams = useSearchParams();
+  const participantId = searchParams.get("participantId");
+  const matchId = searchParams.get("matchId");
+
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleReady = () => {
+  const { userInfo } = useAppSelector((state) => state?.auth);
+
+  const handleReady = async () => {
     setIsLoading(true);
     setTimeout(() => {
-      const roomId = "room1234";
-      router.push(`?roomId=${roomId}`);
-    }, 5000);
+      router.push(`?roomId=${matchId}&participantId=${participantId}`);
+    }, 1000);
   };
 
   return (
@@ -36,6 +45,7 @@ function MatchedView() {
       >
         <Flex align="center" gap={20}>
           <Card
+            id={userInfo?.id}
             info={{
               name: "Bao Thang",
               age: 21,
@@ -48,6 +58,7 @@ function MatchedView() {
             </S.HeartButton>
           </S.HeartWrap>
           <Card
+            id={participantId}
             info={{
               name: "Thuy Suong",
               age: 20,

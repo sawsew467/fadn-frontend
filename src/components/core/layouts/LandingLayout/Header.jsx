@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import "@/styles/css/bootstrap.min.css";
 import "@/styles/css/animate.css";
 import "@/styles/css/magnific-popup.css";
@@ -12,9 +12,19 @@ import "@/styles/css/nice-select.css";
 import "@/styles/css/main.css";
 import "@/styles/css/responsive.css";
 import "@/styles/css/dark.css";
+import { useEffect, useState } from "react";
 
 function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const [token, setToken] = useState(""); // Sử dụng useState để có thể cập nhật giá trị TOKEN
+
+  useEffect(() => {
+    const tokenFromStorage = localStorage.getItem("token");
+    if (tokenFromStorage) {
+      setToken(tokenFromStorage);
+    }
+  }, []); // Dependency array trống để chỉ chạy effect một lần sau khi render lần đầu tiên
 
   return (
     <>
@@ -83,25 +93,46 @@ function Header() {
                   <button className="btn custom-button">Join Now!</button>
                 </div> */}
 
-                <Link href="/users">
-                  <Image
-                    src="/pageImages/user-demo.png"
-                    alt="logo"
-                    width="40"
-                    height="40"
-                  />
-                </Link>
+                <Image
+                  src="/pageImages/user-demo.png"
+                  alt="logo"
+                  width="40"
+                  height="40"
+                  style={{ cursor: "pointer" }}
+                />
+
                 <ul className="submenu">
-                  <li>
-                    <Link href="/profile" style={{ textDecoration: "none" }}>
-                      Tài khoản
-                    </Link>
-                  </li>
-                  <li>
-                    <a href="#" style={{ textDecoration: "none" }}>
-                      Đăng xuất
-                    </a>
-                  </li>
+                  {token === "" ? (
+                    <li>
+                      <Link href="/login" style={{ textDecoration: "none" }}>
+                        Đăng nhập
+                      </Link>
+                    </li>
+                  ) : (
+                    <>
+                      <li>
+                        <Link
+                          href="/profile"
+                          style={{ textDecoration: "none" }}
+                        >
+                          Tài khoản
+                        </Link>
+                      </li>
+                      <li>
+                        <a
+                          style={{ textDecoration: "none", cursor: "pointer" }}
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("email");
+                            localStorage.removeItem("userId");
+                            router.push("/");
+                          }}
+                        >
+                          Đăng xuất
+                        </a>
+                      </li>
+                    </>
+                  )}
                 </ul>
               </li>
             </ul>

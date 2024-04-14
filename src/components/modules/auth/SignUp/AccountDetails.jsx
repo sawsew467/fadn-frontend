@@ -12,6 +12,7 @@ function AccountDetails({
   setPasswordError,
   handleEmailChange,
   handlePasswordChange,
+  onlyRead,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -57,6 +58,7 @@ function AccountDetails({
           style={{
             border: emailError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {emailError?.status && (
           <p style={{ color: "red" }}>{emailError?.message}</p>
@@ -81,6 +83,7 @@ function AccountDetails({
             onChange={handlePasswordChange}
             value={password}
             style={{ border: passwordError?.status && "1px solid red" }}
+            readOnly={onlyRead}
           />
           <i
             className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"}`}
