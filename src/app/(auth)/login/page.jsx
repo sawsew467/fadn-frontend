@@ -48,7 +48,7 @@ function Login() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await fetch("http://localhost:8080/profile", {
+        const res = await fetch("http://localhost:8088/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -115,7 +115,7 @@ function Login() {
       try {
         // Thực hiện POST API bằng fetch
         const response = await fetch(
-          "http://localhost:8080/api/v1/auth/login",
+          "http://localhost:8088/api/v1/auth/login",
           {
             method: "POST",
             headers: {
@@ -271,7 +271,7 @@ function Login() {
                     <div className="or-content">
                       <p>Tiếp tục với email của bạn</p>
                       <a
-                        href="http://localhost:8080/oauth2/authorization/google"
+                        href="http://localhost:8088/oauth2/authorization/google"
                         className="or-btn"
                         style={{ textDecoration: "none" }}
                       >

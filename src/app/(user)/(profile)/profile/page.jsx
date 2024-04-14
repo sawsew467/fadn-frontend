@@ -25,6 +25,7 @@ import {
   validateLookingFor,
   validateStatus,
 } from "@/input-validate/index.js";
+import axios from "axios";
 
 // Sample cities data
 const cities = citiesJson;
@@ -199,7 +200,7 @@ export default function ProfilePage() {
 
     (async () => {
       const res = await fetch(
-        "http://localhost:8080/api/v1/users/email/" + EMAIL,
+        "http://localhost:8088/api/v1/users/email/" + EMAIL,
         {
           method: "GET",
           headers: {
@@ -462,6 +463,48 @@ export default function ProfilePage() {
       console.log("Điền thông tin đầy đủ.");
     }
   };
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState([
+    {
+      uid: "-1",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-2",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-3",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-4",
+      name: "image.png",
+      status: "done",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-xxx",
+      percent: 50,
+      name: "image.png",
+      status: "uploading",
+      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    },
+    {
+      uid: "-5",
+      name: "image.png",
+      status: "error",
+    },
+  ]);
+
   // post user updated
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -498,84 +541,86 @@ export default function ProfilePage() {
     };
 
     console.log(formUserUpdatedData, formInterestGenderData);
+    console.log(fileList);
 
-    const TOKEN = localStorage.getItem("token");
-    const EMAIL = localStorage.getItem("email");
-    const userId = localStorage.getItem("userId");
+    // const TOKEN = localStorage.getItem("token");
+    // const EMAIL = localStorage.getItem("email");
+    // const userId = localStorage.getItem("userId");
 
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/users/" + userId,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + TOKEN,
-          },
-          body: JSON.stringify(formUserUpdatedData),
-        }
-      );
+    // try {
+    //   const response = await fetch(
+    //     "http://localhost:8088/api/v1/users/" + userId,
+    //     {
+    //       method: "PATCH",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: "Bearer " + TOKEN,
+    //       },
+    //       body: JSON.stringify(formUserUpdatedData),
+    //     }
+    //   );
 
-      // Xử lý response nếu cần
-      const responseData = await response.json();
-      if (
-        responseData?.statusCode === 208 &&
-        responseData?.message === "Your phone is already registered."
-      ) {
-        setPhoneError({
-          status: true,
-          message: "Số điện thoại của bạn đã được sử dụng.",
-        });
-        setSpinning(false);
-        return;
-      }
-      if (
-        responseData?.statusCode === 208 &&
-        responseData?.message === "Your nickname is already registered."
-      ) {
-        setNicknameError({
-          status: true,
-          message: "Nickname của bạn đã được sử dụng.",
-        });
-        setSpinning(false);
-        return;
-      }
+    //   // Xử lý response nếu cần
+    //   const responseData = await response.json();
+    //   if (
+    //     responseData?.statusCode === 208 &&
+    //     responseData?.message === "Your phone is already registered."
+    //   ) {
+    //     setPhoneError({
+    //       status: true,
+    //       message: "Số điện thoại của bạn đã được sử dụng.",
+    //     });
+    //     setSpinning(false);
+    //     return;
+    //   }
+    //   if (
+    //     responseData?.statusCode === 208 &&
+    //     responseData?.message === "Your nickname is already registered."
+    //   ) {
+    //     setNicknameError({
+    //       status: true,
+    //       message: "Nickname của bạn đã được sử dụng.",
+    //     });
+    //     setSpinning(false);
+    //     return;
+    //   }
 
-      console.log("User sau khi update:", responseData);
+    //   console.log("User sau khi update:", responseData);
 
-      setSpinning(false);
-    } catch (error) {
-      console.error(error);
-      // Hiển thị thông báo lỗi cho người dùng nếu cần
-    }
+    //   setSpinning(false);
+    // } catch (error) {
+    //   console.error(error);
+    //   // Hiển thị thông báo lỗi cho người dùng nếu cần
+    // }
 
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/users/" +
-          userId +
-          "/interest-gender/" +
-          userUpdated.interestGenderId,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + TOKEN,
-          },
-          body: JSON.stringify(formInterestGenderData),
-        }
-      );
+    // try {
+    //   const response = await fetch(
+    //     "http://localhost:8088/api/v1/users/" +
+    //       userId +
+    //       "/interest-gender/" +
+    //       userUpdated.interestGenderId,
+    //     {
+    //       method: "PATCH",
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //         Authorization: "Bearer " + TOKEN,
+    //       },
+    //       body: JSON.stringify(formInterestGenderData),
+    //     }
+    //   );
 
-      // Xử lý response nếu cần
-      const responseData = await response.json();
-      console.log("User InterestGender sau khi update:", responseData);
+    //   // Xử lý response nếu cần
+    //   const responseData = await response.json();
+    //   console.log("User InterestGender sau khi update:", responseData);
 
-      setSpinning(false);
-    } catch (error) {
-      console.error(error);
-      // Hiển thị thông báo lỗi cho người dùng nếu cần
-    }
+    //   setSpinning(false);
+    // } catch (error) {
+    //   console.error(error);
+    //   // Hiển thị thông báo lỗi cho người dùng nếu cần
+    // }
 
     successMessage("Bạn đã cập nhật profile thành công.");
+    console.log(fileList);
     setPhoneError({
       status: false,
       message: "",
@@ -584,49 +629,11 @@ export default function ProfilePage() {
       status: false,
       message: "",
     });
+    setSpinning(false);
   };
 
   // ---------------------------------------------------------------------------
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState([
-    // {
-    //   uid: "-1",
-    //   name: "image.png",
-    //   status: "done",
-    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-    // {
-    //   uid: "-2",
-    //   name: "image.png",
-    //   status: "done",
-    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-    // {
-    //   uid: "-3",
-    //   name: "image.png",
-    //   status: "done",
-    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-    // {
-    //   uid: "-4",
-    //   name: "image.png",
-    //   status: "done",
-    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-    // {
-    //   uid: "-xxx",
-    //   percent: 50,
-    //   name: "image.png",
-    //   status: "uploading",
-    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    // },
-    // {
-    //   uid: "-5",
-    //   name: "image.png",
-    //   status: "error",
-    // },
-  ]);
+
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
@@ -659,6 +666,50 @@ export default function ProfilePage() {
     </button>
   );
 
+  const [defaultFileList, setDefaultFileList] = useState([]);
+  const [progress, setProgress] = useState(0);
+
+  const handleCustomRequest = async (options) => {
+    const { onSuccess, onError, file, onProgress } = options;
+
+    const fmData = new FormData();
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+      onUploadProgress: (event) => {
+        const percent = Math.floor((event.loaded / event.total) * 100);
+        setProgress(percent);
+        if (percent === 100) {
+          setTimeout(() => setProgress(0), 1000);
+        }
+        onProgress({ percent: (event.loaded / event.total) * 100 });
+      },
+    };
+    fmData.append("image", file);
+    try {
+      const res = await axios.post(
+        "https://api.imgbb.com/1/upload?key=c9a0d416d3771b79bea983ffbb51811e",
+        fmData,
+        config
+      );
+
+      onSuccess("Ok");
+      console.log("fileList", fileList);
+      console.log("server res: ", res);
+      console.log(res?.data?.data);
+      setFileList([res?.data?.data, ...fileList]);
+    } catch (err) {
+      console.log("Eroor: ", err);
+      const error = new Error("Some error");
+      onError({ err });
+    }
+  };
+
+  const handleOnChange = ({ file, fileList, event }) => {
+    // console.log(file, fileList, event);
+    //Using Hooks to update the state to the current filelist
+    // setFileList(fileList);
+    //filelist - [{uid: "-1",url:'Some url to image'}]
+  };
   return (
     <>
       {contextHolder}
@@ -666,11 +717,17 @@ export default function ProfilePage() {
 
       <div className="page-title">Thông tin cá nhân</div>
       <Upload
-        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+        // action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+
+        customRequest={handleCustomRequest}
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
-        onChange={handleChange}
+        // onChange={handleChange}
+        accept="image/*"
+        method="POST"
+        onChange={handleOnChange}
+        // headers={}
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>

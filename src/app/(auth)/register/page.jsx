@@ -515,7 +515,7 @@ function Register() {
     try {
       // Thực hiện POST API bằng fetch
       const response = await fetch(
-        "http://localhost:8080/api/v1/send-mail-otp",
+        "http://localhost:8088/api/v1/send-mail-otp",
         {
           method: "POST",
           headers: {
@@ -579,7 +579,7 @@ function Register() {
     try {
       // Thực hiện POST API bằng fetch
       const response = await fetch(
-        "http://localhost:8080/api/v1/auth/register",
+        "http://localhost:8088/api/v1/auth/register",
         {
           method: "POST",
           headers: {
