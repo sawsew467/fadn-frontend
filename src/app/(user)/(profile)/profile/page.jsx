@@ -5,8 +5,16 @@ import { useState, useEffect } from "react";
 import citiesJson from "@/components/modules/auth/SignUp/cites";
 import { Skeleton } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { Button, message, Upload, Spin } from "antd";
+import { Button, message, Upload, Spin, Image } from "antd";
 import { Space } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 import {
   validateName,
   validateEmail,
@@ -17,7 +25,6 @@ import {
   validateLookingFor,
   validateStatus,
 } from "@/input-validate/index.js";
-import UpdateLoading from "@/components/modules/profile/UpdateLoading";
 
 // Sample cities data
 const cities = citiesJson;
@@ -579,11 +586,108 @@ export default function ProfilePage() {
     });
   };
 
+  // ---------------------------------------------------------------------------
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState("");
+  const [fileList, setFileList] = useState([
+    // {
+    //   uid: "-1",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
+    // {
+    //   uid: "-2",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
+    // {
+    //   uid: "-3",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
+    // {
+    //   uid: "-4",
+    //   name: "image.png",
+    //   status: "done",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
+    // {
+    //   uid: "-xxx",
+    //   percent: 50,
+    //   name: "image.png",
+    //   status: "uploading",
+    //   url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
+    // },
+    // {
+    //   uid: "-5",
+    //   name: "image.png",
+    //   status: "error",
+    // },
+  ]);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+  };
+  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const uploadButton = (
+    <button
+      style={{
+        border: 0,
+        background: "none",
+      }}
+      type="button"
+    >
+      <PlusOutlined
+        style={{
+          color: "white",
+        }}
+      />
+      <div
+        style={{
+          marginTop: 8,
+          color: "white",
+        }}
+      >
+        Upload
+      </div>
+    </button>
+  );
+
   return (
     <>
       {contextHolder}
       <Spin spinning={spinning} fullscreen />
+
       <div className="page-title">Thông tin cá nhân</div>
+      <Upload
+        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+        listType="picture-card"
+        fileList={fileList}
+        onPreview={handlePreview}
+        onChange={handleChange}
+      >
+        {fileList.length >= 8 ? null : uploadButton}
+      </Upload>
+      {previewImage && (
+        <Image
+          wrapperStyle={{
+            display: "none",
+          }}
+          preview={{
+            visible: previewOpen,
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            afterOpenChange: (visible) => !visible && setPreviewImage(""),
+          }}
+          src={previewImage}
+          alt="image preview"
+        />
+      )}
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-6">
