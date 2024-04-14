@@ -3,30 +3,11 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { Button } from 'antd';
 import { Dropdown, Space } from 'antd';
+import { CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import './Membership.css';
 
 function Checkout() {
     const [users, setUsers] = useState([]);
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const res = await fetch('http://localhost:8088/api/v1/users/2', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwODAwNTQsImV4cCI6MTcxMzE2NjQ1NH0.QiFHv9tB6kWOwqPICmmQBBrfwaNG2_6pfTsd7N8stdMwvYpa7srXB9qcY9H8WSLd    '
-                    }
-                });
-                const data = await res.json();
-                console.log(data);
-                setUsers(data);
-            } catch (error) {
-                console.error('Error fetching users:', error);
-            }
-        };
-
-        fetchUsers();
-    }, []);
 
     const handleUpdateRole = async (userId, roleId, roleName) => {
         try {
@@ -65,7 +46,7 @@ function Checkout() {
         setOpenIndex(index === openIndex ? null : index);
     };
 
-
+    const [paymentStatus, setPaymentStatus] = useState(null);
 
     const handleCheckPayment = async () => {
         try {
@@ -84,21 +65,26 @@ function Checkout() {
             if (lastTransactionId.includes(transactionId)) {
                 switch (packageID) {
                     case "PACKAGE001":
-                        alert("Thanh toán gói Basic thành công");
+                        alert("Thanh toán thành công");
+                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
                         handleUpdateRole(userId, "2", "PREMIUM");
                         break;
                     case "PACKAGE002":
-                        alert("Thanh toán gói Standard thành công");
+                        alert("Thanh toán thành công");
+                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
                         handleUpdateRole(userId, "2", "PREMIUM");
                         break;
                     case "PACKAGE003":
-                        alert("Thanh toán gói Premium thành công");
+                        alert("Thanh toán thành công");
+                        setPaymentStatus(<CheckCircleOutlined className="check-circle" style={{ color: "green" }} />);
                         handleUpdateRole(userId, "2", "PREMIUM");
                         break;
                     default:
                         alert("Thanh toán thành công");
                 }
             } else {
+                alert("Thanh toán không thành công");
+                setPaymentStatus(<CloseCircleOutlined className="close-circle" style={{ color: "red" }} />);
                 console.log("Thanh toán không thành công");
             }
         } catch (error) {
@@ -233,6 +219,7 @@ function Checkout() {
                                             >
                                                 Kiểm tra
                                             </Button>
+                                            {paymentStatus && <div>{paymentStatus}</div>}
                                         </div>
                                     )}
 
