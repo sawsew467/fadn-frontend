@@ -1,5 +1,9 @@
-import { SettingOutlined, HeartOutlined, MessageOutlined, PieChartOutlined } from "@ant-design/icons";
-
+import {
+  SettingOutlined,
+  HeartOutlined,
+  MessageOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
 
 export const sidebarAppMenu = [
   {
@@ -41,6 +45,11 @@ export const sidebarAdminMenu = [
     icon: <SettingOutlined />,
     label: "Quản lý cuộc gọi",
     href: "/admin/CallManagement"
+  },
+  {
+    key: "4",
+    icon: <QuestionCircleOutlined />,
+    label: "Quản lý câu hỏi",
   },
 ];
 

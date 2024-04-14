@@ -17,6 +17,8 @@ import Side from "./Side";
 import { redirect, useRouter } from "next/navigation";
 
 function UserLayout({ children }) {
+  console.log("FriendRequests layout");
+
   const router = useRouter();
 
   useEffect(() => {

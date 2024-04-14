@@ -1,0 +1,106 @@
+/* page.module.css - Assuming the color code is #2B2D42 */
+.pageTitle,
+.friendsList,
+.friend {
+    background-color: #2B2D42;
+}
+.pageTitle {
+    color: #fff;
+    /* Light color for text */
+    font-size: 24px;
+    padding: 10px 0;
+    text-align: center;
+    /* Dark background for the title area */
+}
+
+.errorMessage {
+    color: #ff6b6b;
+    /* Light red for errors */
+    text-align: center;
+    padding: 10px;
+}
+
+.friendsList {
+    color: #ddd;
+    /* Light grey color for text */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.friend {
+    display: flex;
+    justify-content: space-between;
+    /* Aligns children with space between */
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #2B2D42;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.friendDetails {
+    display: flex;
+    align-items: center;
+}
+.friendImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.friendInfo h4 {
+    color: #aad;
+    /* Light blue for headings */
+    margin: 0;
+}
+
+.friendInfo p {
+    margin: 5px 0;
+    color: #ccc;
+    /* Lighter grey for text */
+}
+
+.noFriendsMessage {
+    color: #bbb;
+    /* Light grey for no friends message */
+    text-align: center;
+}
+
+/* Icon specific styles */
+.friendInfo .icon {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.removeFriendButton {
+    background-color: #2B2D42;
+    /* Softer red */
+    color: white;
+    border: 1px solid #aad;;
+    /* Slight border */
+    border-radius: 4px;
+    padding: 10px 15px;
+    /* Increased padding for better spacing */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    /* Slightly bolder text */
+    text-transform: uppercase;
+    /* Optional: makes the button text stand out */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    /* Smooth transition for hover effect */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 150px;
+
+    /* Adjusted shadow for depth */
+}
+
+.removeFriendButton:hover {
+    background-color: #aad;;
+    /* Darker shade on hover */
+}
