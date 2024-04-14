@@ -1,0 +1,72 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #db7093;
+    margin-bottom: 30px;
+}
+
+.description {
+    text-align: justify;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.attributesSection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.attributesList {
+    background: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.subheading {
+    font-size: 1.8rem;
+    color: #db7093;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.strengths li,
+.weaknesses li,
+.attributesList ul li {
+    background: #fff;
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.strengths li:hover,
+.weaknesses li:hover,
+.attributesList ul li:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .attributesSection {
+        grid-template-columns: 1fr;
+    }
+
+    .subheading {
+        font-size: 1.5rem;
+    }
+}

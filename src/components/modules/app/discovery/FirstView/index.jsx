@@ -35,8 +35,9 @@ function FirstView() {
         },
         body: JSON.stringify(filter),
       });
-
+      console.log("response:", response);
       const result = await response.json();
+      console.log("result:", result);
 
       if (result?.roomId) {
         set(ref(database, "rooms/" + result?.participantId), result);
@@ -55,6 +56,8 @@ function FirstView() {
     const data = snapshot.val();
     for (const key in data) {
       const object = data[key];
+      console.log("object: ", object);
+      console.log("userInfo: ", userInfo);
       if (userInfo?.id == object?.participantId) {
         console.log("object?.userId: ", "rooms/" + object?.participantId);
         remove(ref(database, "rooms/" + object?.participantId));

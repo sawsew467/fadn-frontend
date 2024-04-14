@@ -116,7 +116,18 @@ export default function Side() {
                   >
                     Yêu cầu kết bạn
                   </Link>
-                </li> */}
+                </li>
+                <li>
+                  <Link
+                    className={`${
+                      pathname === "/friend-requests" ? "active" : ""
+                    }`}
+                    href="/friends"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Bạn bè
+                  </Link>
+                </li>
                 {/* <li>
                           <a href="user-badges.html">Badges</a>
                         </li> */}

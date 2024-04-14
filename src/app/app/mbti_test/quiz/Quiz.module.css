@@ -1,0 +1,155 @@
+.container {
+    background-color: #fef7f9;
+    /* Soft pink background */
+    color: #444;
+    /* Soft text color for readability */
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.error {
+    color: #ff6b6b;
+    /* Soft red color for error messages */
+    margin-bottom: 1rem;
+}
+
+.progressBar {
+    background-color: #e6e6e6;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+.progress {
+    background-color: #ff8fb1;
+    /* Warm progress bar color */
+    height: 10px;
+    border-radius: 5px;
+}
+
+.questionSection {
+    margin-bottom: 1rem;
+}
+
+.questionCount {
+    color: #5c3c6d;
+    /* Darker color for contrast */
+    margin-bottom: 0.5rem;
+}
+
+.questionText {
+    background-color: #ffffff;
+    /* Clear background for the question */
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.answerSection {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.answerButton {
+    background-color: #ffdae9;
+    /* Soft pink for answer buttons */
+    color: #5c3c6d;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+.answerButton:hover,
+.answerButton:active,
+.answerButton.activeButton {
+    transform: scale(1.05);
+}
+
+.backNextButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.button {
+    background-color: #ff69b4;
+    /* Bright pink for a call-to-action button */
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover,
+.button:active {
+    background-color: #ff1493;
+}
+
+.messageBox {
+    padding: 2rem;
+    border-top: 2px solid #ff69b4;
+}
+
+.message {
+    color: #5c3c6d;
+    margin-bottom: 1rem;
+}
+
+.startTestButton {
+    background-color: #ff8fb1;
+    /* Consistent with progress bar color */
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.startTestButton:hover,
+.startTestButton:active {
+    background-color: #ff6b6b;
+}
+.backNextButtons button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    background-color: #f2d1c9;
+    /* Soft peach background for the buttons */
+    color: #5c3c6d;
+    /* Color to match the question count */
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 0.5rem;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.backNextButtons button:hover {
+    background-color: #e8bfb0;
+    /* Slightly darker peach on hover */
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.backNextButtons button:disabled {
+    background-color: #e6e6e6;
+    /* Grayed out when disabled */
+    color: #bbb;
+    cursor: not-allowed;
+}
+
+.activeButton{
+    background-color: #ff69b4;
+    color: white;
+}
