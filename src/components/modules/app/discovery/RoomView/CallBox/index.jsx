@@ -5,6 +5,8 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import * as S from "./styles";
+
 const Video = dynamic(
   () => import("@/components/modules/app/discovery/RoomView/Video/index"),
   {
@@ -26,7 +28,7 @@ function CallBox() {
   }, []); // Chỉ chạy một lần sau khi component được mounted
 
   return (
-    <div
+    <S.Meeting
       style={{
         flex: 1,
         background: "#fff",
@@ -50,7 +52,7 @@ function CallBox() {
       ) : (
         <p>loading...</p>
       )}
-    </div>
+    </S.Meeting>
   );
 }
 

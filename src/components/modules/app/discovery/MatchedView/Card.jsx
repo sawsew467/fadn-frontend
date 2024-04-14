@@ -7,16 +7,13 @@ function Card({ id }) {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(
-        `http://192.168.3.195:8088/api/v1/user/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await fetch(`http://localhost:8088/api/v1/user/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       const data = await response?.json();
 

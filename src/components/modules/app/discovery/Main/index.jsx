@@ -31,21 +31,18 @@ function Discovery() {
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch(
-        "http://192.168.3.195:8088/api/v1/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(values),
-        }
-      );
+      const response = await fetch("http://localhost:8088/api/v1/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
       const result = await response.json();
       localStorage.setItem("token", result?.token);
 
       const getMeResponse = await fetch(
-        "http://192.168.3.195:8088/api/v1/auth/get-me",
+        "http://localhost:8088/api/v1/auth/get-me",
         {
           method: "GET",
           headers: {
