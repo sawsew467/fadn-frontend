@@ -2,23 +2,85 @@
 import React from 'react';
 import { Breadcrumb } from 'antd';
 import { useState, useEffect } from 'react';
-import { Space, Table, Modal, Progress, Button, Popconfirm } from 'antd';
+import { Space, Table, Modal, Button } from 'antd';
 import Link from 'next/link';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { useParams } from 'next/navigation';
+
 
 
 export default function Users() {
     const [users, setUsers] = useState([]);
+    const [userId, setUserId] = useState([]);
+
+    const deleteUser = async () => {
+        const TOKEN = localStorage.getItem("token");
+        // const userId = localStorage.getItem("userId");
+
+        try {
+            const res = await fetch(`http://localhost:8088/api/v1/users/` + userId, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer' + TOKEN
+                }
+            });
+
+            if (res.ok) {
+                console.log('Xóa người dùng thành công');
+                fetchUsers();
+            } else {
+                console.error('Xóa người dùng không thành công');
+            }
+        } catch (error) {
+            console.error('Xóa người dùng không thành công', error);
+        }
+        const fetchUsers = async () => {
+            try {
+                const res = await fetch('http://localhost:8088/api/v1/users', {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTk0MzEsImV4cCI6MTcxMzE4NTgzMX0.h4F1gVuGAxUgIh0CdXCCw0U-UvuexexnO_lI2RILleS-nLSv_yOsflNnFj8l_2zn'
+                    }
+                });
+                const data = await res.json()
+                setUsers(data);
+            } catch (error) {
+                console.error('Fetch dữ liệu không thành công', error);
+            }
+        };
+
+        // try {
+        //     const res = await fetch(`http://localhost:8088/api/v1/users/` + userId, {
+        //         method: 'DELETE',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwOTk0MzEsImV4cCI6MTcxMzE4NTgzMX0.h4F1gVuGAxUgIh0CdXCCw0U-UvuexexnO_lI2RILleS-nLSv_yOsflNnFj8l_2zn'
+        //         }
+        //     });
+
+        //     // const result = await res.json();
+        //     console.log(res);
+
+        //     if (res?.ok) {
+        //         console.log('Xóa người dùng thành công');
+        //         fetchUsers();
+        //     } else {
+        //         console.error('Xóa người dùng không thành công');
+        //     }
+        // } catch (error) {
+        //     console.error('Xóa người dùng không thành công', error);
+        // }
+    };
 
 
     useEffect(() => {
         (async () => {
+            const TOKEN = localStorage.getItem("token");
             const res = await fetch('http://localhost:8088/api/v1/users', {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwODAwNTQsImV4cCI6MTcxMzE2NjQ1NH0.QiFHv9tB6kWOwqPICmmQBBrfwaNG2_6pfTsd7N8stdMwvYpa7srXB9qcY9H8WSLd '
+                    Authorization: 'Bearer' + TOKEN
                 }
             })
             const data = await res.json()
@@ -27,6 +89,25 @@ export default function Users() {
         })();
     }, []);
 
+    const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
+
+    const showModal = () => {
+        setOpen(true);
+    };
+
+    const handleOk = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+            setOpen(false);
+            deleteUser();
+        }, 1000);
+    };
+
+    const handleCancel = () => {
+        setOpen(false);
+    };
 
     const calculateAge = (dob) => {
         const today = new Date();
@@ -40,6 +121,8 @@ export default function Users() {
 
         return age;
     };
+
+
 
     const columns = [
         // {
@@ -63,16 +146,6 @@ export default function Users() {
             key: 'phone',
         },
         {
-            title: 'Popularity',
-            dataIndex: 'popularity',
-            key: 'popularity',
-            render: (popularity) => (
-                <>
-                    <Progress percent={popularity} size={"small"} strokeColor={{ from: "#108ee9", to: "#87d068" }} />
-                </>
-            )
-        },
-        {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
@@ -86,22 +159,30 @@ export default function Users() {
             title: 'Action',
             key: 'action',
             render: (_, record) => {
-                const userId = record.key;
+                setUserId(record.key);
                 return (
-                    <Space size="middle">
-                        <Popconfirm
-                            title="Ban người dùng"
-                            description="Bạn có chắc chắn muốn ban người dùng này chứ?"
+                    <>
+                        <Button type="primary" danger onClick={showModal}>
+                            Xóa
+                        </Button>
+                        <Modal
+                            open={open}
+                            title="Xóa"
+                            onOk={handleOk}
+                            onCancel={handleCancel}
+                            footer={[
+                                <Button key="back" onClick={handleCancel}>
+                                    Cancel
+                                </Button>,
+                                <Button key="submit" type="primary" danger loading={loading} onClick={handleOk}>
+                                    Xóa
+                                </Button>,
+
+                            ]}
                         >
-                            <Button type='primary' danger>Ban</Button>
-                        </Popconfirm>
-                        <Button type='primary' secondary>Block</Button>
-                        <Button type='primary' >Phân quyền</Button>
-
-                        {/* <Button type='primary' secondary>Admin</Button>
-                        <Button type='primary' secondary>Upgrade to premium</Button> */}
-
-                    </Space>
+                            Bạn có chắc chắn muốn xóa người dùng này?
+                        </Modal>
+                    </>
                 )
             },
         },
@@ -116,12 +197,7 @@ export default function Users() {
             phone: user?.phone,
             email: user?.email,
             city: user?.city,
-            popularity: user?.popularity,
         }));
-
-
-
-
 
 
     return (

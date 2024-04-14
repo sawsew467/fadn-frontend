@@ -1,21 +1,22 @@
 "use client"
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from 'antd';
-import { Dropdown, Space } from 'antd';
 import { CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import './Membership.css';
 
 function Checkout() {
-    const [users, setUsers] = useState([]);
 
-    const handleUpdateRole = async (userId, roleId, roleName) => {
+
+    const handleUpdateRole = async (roleId, roleName) => {
+        const TOKEN = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
         try {
-            const res = await fetch(`http://localhost:8088/api/v1/users/${userId}`, {
+            const res = await fetch( "http://localhost:8088/api/v1/users/" + userId, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MTMwODAwNTQsImV4cCI6MTcxMzE2NjQ1NH0.QiFHv9tB6kWOwqPICmmQBBrfwaNG2_6pfTsd7N8stdMwvYpa7srXB9qcY9H8WSLd'
+                    Authorization: 'Bearer' + TOKEN
                 },
                 body: JSON.stringify({ roleDTO: { id: roleId, name: roleName } })
             });
@@ -180,6 +181,7 @@ function Checkout() {
                                                 <p>{item.packagePrice}</p>
                                                 <Button
                                                     style={{
+                                                        height: 'auto',
                                                         background: 'linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%)',
                                                         color: 'white',
                                                         display: 'block',
@@ -202,6 +204,7 @@ function Checkout() {
                                             <p>Số tiền: {selectedPackage.packagePrice}</p>
                                             <Button
                                                 style={{
+                                                    height: 'auto',
                                                     background: 'linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%)',
                                                     color: 'white',
                                                     display: 'block',

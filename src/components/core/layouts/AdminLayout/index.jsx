@@ -84,61 +84,6 @@ const AdminLayout = ({ children }) => {
       </Sider>
 
       <Layout>
-        <S.Container>
-          <S.SearchBox>
-            <Flex gap="small" wrap="wrap">
-              <Input placeholder="Search..." />
-            </Flex>
-
-          </S.SearchBox>
-          <S.HeaderStyled
-            style={{
-              padding: 0,
-              background: "#fff",
-            }}
-          >
-
-            <S.HeaderRight>
-              <Dropdown
-                arrow={{ pointAtCenter: true }}
-                trigger={["click"]}
-                dropdownRender={() => <DropdownNotification />}
-              >
-                <Badge count={5}>
-                  <BellOutlined style={{ fontSize: "24px", color: "#297fff" }} />
-                </Badge>
-              </Dropdown>
-              <Dropdown
-                menu={{ items }}
-                placement="bottom"
-                arrow={{ pointAtCenter: true }}
-                trigger={["click"]}
-              >
-                <div className="wrap-options">
-                  <Avatar
-                    src={
-                      <Image
-                        src={"/images/avatar/img1.png"}
-                        alt="avatar"
-                        priority={true}
-                        width={16}
-                        height={16}
-                      ></Image>
-                    }
-                  ></Avatar>
-                  <p className="user-name">Tran Van Bao Thang</p>
-                  <Image
-                    className="dropdown-icon"
-                    src="/icons/layout/dropdown.svg"
-                    alt="dropdown"
-                    width={8}
-                    height={4}
-                  />
-                </div>
-              </Dropdown>
-            </S.HeaderRight>
-          </S.HeaderStyled>
-        </S.Container>
         <Content
           style={{
             padding: "32px",
