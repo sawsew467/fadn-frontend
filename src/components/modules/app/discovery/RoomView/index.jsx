@@ -24,7 +24,7 @@ function RoomView() {
   const fetchData = useCallback(async () => {
     try {
       const response = await fetch(
-        `http://localhost:8088/api/v1/user/${participantId}`,
+        `http://localhost:8088/api/v1/users/${participantId}`,
         {
           method: "GET",
           headers: {
