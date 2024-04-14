@@ -1,0 +1,237 @@
+.container {
+    background-color: #ffe0e9;
+    /* Soft pink background */
+    color: #333;
+    /* For general text */
+    font-family: 'Open Sans', sans-serif;
+    /* A clean, modern font */
+    border-radius: 10px;
+    /* Slightly rounded corners for a soft look */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.1);
+    /* A subtle shadow for depth */
+    padding: 20px;
+    max-width: 800px;
+    /* Ensures the container isn’t too wide on larger screens */
+    margin: 20px auto;
+    /* Centers the container */
+    
+}
+.resultSection {
+    text-align: center;
+    padding: 2em;
+    background: linear-gradient(to bottom, #f8ece0, #ffe0e9);
+    border-radius: 10px;
+    margin-bottom: 2em;
+}
+
+.resultCard {
+    background-color: #ffffff;
+    padding: 2em;
+    margin-top: 1em;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.title {
+    font-size: 2em;
+    color: #5c3c6d;
+    margin-bottom: 0.5em;
+}
+
+.type {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #5c3c6d;
+    margin-bottom: 1em;
+}
+
+.linkButton {
+    background-color: #f76c6c;
+    color: #ffffff;
+    padding: 0.5em 1.5em;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.linkButton:hover {
+    background-color: #fc8d8d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+    .resultSection {
+        padding: 3em;
+    }
+
+    .resultCard {
+        padding: 3em;
+        margin-top: 1.5em;
+    }
+
+    .title {
+        font-size: 2.5em;
+    }
+
+    .type {
+        font-size: 2em;
+    }
+}
+
+.title {
+    font-size: 1.75em;
+    color: #5c3c6d;
+    margin-bottom: 0.5em;
+}
+
+.result {
+    margin-bottom: 1em;
+    padding: 15px;
+    background-color: #fff;
+    /* White background for the result section */
+    border-radius: 5px;
+    /* Slightly rounded corners inside the container */
+}
+
+.type {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #5c3c6d;
+    /* Same as the title color */
+}
+
+.linkButton {
+    display: inline-block;
+    background-color: #f76c6c;
+    /* A passionate color for call-to-action buttons */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    /* Fully rounded edges for buttons */
+    text-decoration: none;
+    /* Removes the underline from links */
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    /* Slight shadow for the button */
+    transition: background-color 0.3s ease;
+}
+
+.linkButton:hover {
+    background-color: #fc8d8d;
+    /* A lighter shade for the hover state */
+}
+
+.historyTitle {
+    margin-top: 2em;
+    /* Spacing before the history section */
+    font-size: 1.25em;
+    color: #5c3c6d;
+    margin-bottom: 15px;
+    /* Consistent with the other titles */
+}
+
+.historyItem {
+    background-color: #fff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    /* Consistency in rounding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date {
+    font-size: 0.85em;
+    color: #999;
+    /* Greyed out text for the date to differentiate from main content */
+    margin-right: 10px;
+}
+
+.noResultsContainer{
+    
+} 
+
+.noResultsMessage {
+    color: #7048e8;
+    /* Soft purple, often associated with romance and luxury */
+    font-size: 1.2rem;
+    /* Slightly larger text for readability */
+    margin-bottom: 1rem;
+    /* Space before the button */
+    text-align: center;
+    /* Centered text for better aesthetics */
+    font-weight: bold;
+    /* Makes the message stand out */
+}
+
+.startTestButton {
+    background-color: #f783ac;
+    /* A warm pink that's soft and inviting */
+    color: white;
+    /* White text for contrast */
+    font-weight: bold;
+    /* Bold text to make the button pop */
+    padding: 10px 20px;
+    /* Padding for a larger, more clickable area */
+    border: none;
+    /* No border for a modern look */
+    border-radius: 25px;
+    /* Rounded borders for a friendly appearance */
+    cursor: pointer;
+    /* Cursor indicates the element is clickable */
+    transition: background-color 0.3s ease;
+    /* Transition for a hover effect */
+    text-transform: uppercase;
+    /* Uppercase text for a commanding presence */
+    font-size: 1rem;
+    /* Standard readable size */
+    letter-spacing: 1px;
+    /* Spaced out letters for style */
+    margin: auto;
+    /* Center the button in the div */
+    display: block;
+    /* Block display to allow for margin auto to work */
+}
+
+.startTestButton:hover {
+    background-color: #e64980;
+    /* Slightly darker pink on hover for feedback */
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .noResultsMessage {
+        font-size: 1rem;
+        /* Slightly smaller text on mobile */
+    }
+
+    .startTestButton {
+        padding: 8px 16px;
+        /* Slightly smaller button on mobile */
+        font-size: 0.875rem;
+        /* Slightly smaller text on mobile */
+    }
+}
+
+.noResultsContainer {
+    padding: 2rem;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.noResultsHeading {
+    margin-bottom: 1rem;
+    color: #5f527a;
+    font-size: 2rem;
+}
+
+ .noResultsMessage {
+     margin-bottom: 2rem;
+     color: #6c757d;
+     font-size: 1rem;
+     line-height: 1.5;
+ }
