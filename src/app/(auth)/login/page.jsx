@@ -156,9 +156,7 @@ function Login() {
         setSpinning(false);
         // Lưu token vào Local Storage
         localStorage.setItem("token", responseData.token);
-        console.log("!!!!");
         const decodedToken = jwt.decode(responseData?.token);
-        console.log("decodedToken: ", decodedToken);
         localStorage.setItem("userId", decodedToken?.userId);
 
         router.push("/profile");
