@@ -48,7 +48,7 @@ const AppLayout = ({ children }) => {
   const getMe = useCallback(async () => {
     try {
       const getMeResponse = await fetch(
-        "http://192.168.3.195:8088/api/v1/auth/get-me",
+        "http://localhost:8088/api/v1/auth/get-me",
         {
           method: "GET",
           headers: {

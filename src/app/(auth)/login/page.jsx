@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
-
+import jwt from "jsonwebtoken";
 import "@/styles/css/bootstrap.min.css";
 import "@/styles/css/main.css";
 import "@/styles/css/dark.css";
@@ -148,6 +148,7 @@ function Login() {
           error("Password của bạn không đúng.");
           setPasswordError({ status: true, message: "" });
           localStorage.removeItem("token");
+
           setSpinning(false);
           return;
         }
@@ -155,6 +156,11 @@ function Login() {
         setSpinning(false);
         // Lưu token vào Local Storage
         localStorage.setItem("token", responseData.token);
+        console.log("!!!!");
+        const decodedToken = jwt.decode(responseData?.token);
+        console.log("decodedToken: ", decodedToken);
+        localStorage.setItem("userId", decodedToken?.userId);
+
         router.push("/profile");
       } catch (error) {
         console.error(error);

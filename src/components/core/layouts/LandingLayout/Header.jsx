@@ -122,10 +122,11 @@ function Header() {
                         <a
                           style={{ textDecoration: "none", cursor: "pointer" }}
                           onClick={() => {
+                            console.log("!!!");
                             localStorage.removeItem("token");
                             localStorage.removeItem("email");
                             localStorage.removeItem("userId");
-                            router.push("/");
+                            router.push("/login");
                           }}
                         >
                           Đăng xuất
