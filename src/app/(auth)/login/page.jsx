@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
-
+import jwt from "jsonwebtoken";
 import "@/styles/css/bootstrap.min.css";
 import "@/styles/css/main.css";
 import "@/styles/css/dark.css";
@@ -48,7 +48,7 @@ function Login() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await fetch("http://localhost:8080/profile", {
+        const res = await fetch("http://localhost:8088/profile", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -115,7 +115,7 @@ function Login() {
       try {
         // Thực hiện POST API bằng fetch
         const response = await fetch(
-          "http://localhost:8080/api/v1/auth/login",
+          "http://localhost:8088/api/v1/auth/login",
           {
             method: "POST",
             headers: {
@@ -148,6 +148,7 @@ function Login() {
           error("Password của bạn không đúng.");
           setPasswordError({ status: true, message: "" });
           localStorage.removeItem("token");
+
           setSpinning(false);
           return;
         }
@@ -155,6 +156,11 @@ function Login() {
         setSpinning(false);
         // Lưu token vào Local Storage
         localStorage.setItem("token", responseData.token);
+        console.log("!!!!");
+        const decodedToken = jwt.decode(responseData?.token);
+        console.log("decodedToken: ", decodedToken);
+        localStorage.setItem("userId", decodedToken?.userId);
+
         router.push("/profile");
       } catch (error) {
         console.error(error);
@@ -271,7 +277,7 @@ function Login() {
                     <div className="or-content">
                       <p>Tiếp tục với email của bạn</p>
                       <a
-                        href="http://localhost:8080/oauth2/authorization/google"
+                        href="http://localhost:8088/oauth2/authorization/google"
                         className="or-btn"
                         style={{ textDecoration: "none" }}
                       >

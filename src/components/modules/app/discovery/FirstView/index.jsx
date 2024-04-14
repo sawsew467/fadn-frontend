@@ -27,17 +27,14 @@ function FirstView() {
   const handleMatch = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "http://192.168.3.195:8088/api/v1/take-room",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(filter),
-        }
-      );
+      const response = await fetch("http://localhost:8088/api/v1/take-room", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(filter),
+      });
 
       const result = await response.json();
 

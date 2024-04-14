@@ -49,7 +49,7 @@ export default function DeleteAccount() {
 
     try {
       const res = await fetch(
-        "http://localhost:8080/api/v1/users/" +
+        "http://localhost:8088/api/v1/users/" +
           userId +
           "/update-password/" +
           password,
@@ -94,7 +94,7 @@ export default function DeleteAccount() {
     setSpinning(true);
 
     try {
-      const res = await fetch("http://localhost:8080/api/v1/users/" + userId, {
+      const res = await fetch("http://localhost:8088/api/v1/users/" + userId, {
         method: "DELETE",
         headers: {
           // "Content-Type": "application/json",
