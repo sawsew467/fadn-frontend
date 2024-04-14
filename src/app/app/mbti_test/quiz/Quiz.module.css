@@ -67,6 +67,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 .answerButton:hover,
 .answerButton:active,
 .answerButton.activeButton {
@@ -146,4 +147,9 @@
     /* Grayed out when disabled */
     color: #bbb;
     cursor: not-allowed;
+}
+
+.activeButton{
+    background-color: #ff69b4;
+    color: white;
 }

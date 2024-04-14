@@ -125,6 +125,10 @@ const Quiz = () => {
     saveResults();
   };
 
+  const answeredCount = selectedAnswers.filter(
+    (answer) => answer !== null
+  ).length;
+
   return (
     <div className={styles.container}>
       {error ? (
@@ -151,6 +155,10 @@ const Quiz = () => {
           <div className={styles.questionSection}>
             <div className={styles.questionCount}>
               <span>Câu {currentQuestionIndex + 1}</span>/{questions.length}
+              <span>
+                {" "}
+                | Đã trả lời: {answeredCount}/{questions.length}
+              </span>
             </div>
             <div className={styles.questionText}>
               {questions[currentQuestionIndex]?.question_text}
@@ -198,6 +206,12 @@ const Quiz = () => {
             </p>
             <button className={styles.button} onClick={calculateResult}>
               Hoàn thành
+            </button>
+            <button
+              className={styles.button}
+              onClick={() => setCurrentQuestionIndex(questions.length - 1)}
+            >
+              Quay lại câu cuối
             </button>
           </div>
         </div>

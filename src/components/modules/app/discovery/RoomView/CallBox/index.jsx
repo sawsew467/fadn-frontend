@@ -1,7 +1,9 @@
-import { useAppSelector } from "@/hooks/useRedux";
-import { authToken } from "@/libs/react-video/api";
+"use client";
+
 import { MeetingConsumer, MeetingProvider } from "@videosdk.live/react-sdk";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const Video = dynamic(
   () => import("@/components/modules/app/discovery/RoomView/Video/index"),
@@ -11,7 +13,18 @@ const Video = dynamic(
 );
 
 function CallBox() {
-  const { meetingId } = useAppSelector((state) => state?.app);
+  const [renderMeetingProvider, setRenderMeetingProvider] = useState(false);
+  const searchParams = useSearchParams();
+  const roomId = searchParams.get("roomId");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setRenderMeetingProvider(true);
+    }, 2000); // Delay 2 giây
+
+    return () => clearTimeout(timer); // Xóa timer nếu component bị unmounted
+  }, []); // Chỉ chạy một lần sau khi component được mounted
+
   return (
     <div
       style={{
@@ -20,22 +33,19 @@ function CallBox() {
         borderRadius: 12,
       }}
     >
-      {meetingId ? (
+      {renderMeetingProvider ? (
         <MeetingProvider
           config={{
-            meetingId: `qpd8-hpc7-coif`,
+            meetingId: `${roomId}`,
             micEnabled: true,
             webcamEnabled: true,
             name: "C.V. Raman",
           }}
-          token={authToken}
+          token={
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiI2ODY3NGEyYy04NzY5LTQxZDQtOGMzMy0zOWM2ZWI1ODcwZGUiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTcxMjgwMTk4NCwiZXhwIjoxNzE1MzkzOTg0fQ.yWpMIJO4SdL8bIQgqdT-u91vNHJLEhutQS9RPUzq9Jg"
+          }
         >
-          <MeetingConsumer>
-            {() => (
-              // <Video></Video>
-              <></>
-            )}
-          </MeetingConsumer>
+          <MeetingConsumer>{() => <Video></Video>}</MeetingConsumer>
         </MeetingProvider>
       ) : (
         <p>loading...</p>
