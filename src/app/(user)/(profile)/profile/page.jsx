@@ -543,81 +543,81 @@ export default function ProfilePage() {
     console.log(formUserUpdatedData, formInterestGenderData);
     console.log(fileList);
 
-    // const TOKEN = localStorage.getItem("token");
-    // const EMAIL = localStorage.getItem("email");
-    // const userId = localStorage.getItem("userId");
+    const TOKEN = localStorage.getItem("token");
+    const EMAIL = localStorage.getItem("email");
+    const userId = localStorage.getItem("userId");
 
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:8088/api/v1/users/" + userId,
-    //     {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: "Bearer " + TOKEN,
-    //       },
-    //       body: JSON.stringify(formUserUpdatedData),
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        "http://localhost:8088/api/v1/users/" + userId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + TOKEN,
+          },
+          body: JSON.stringify(formUserUpdatedData),
+        }
+      );
 
-    //   // Xử lý response nếu cần
-    //   const responseData = await response.json();
-    //   if (
-    //     responseData?.statusCode === 208 &&
-    //     responseData?.message === "Your phone is already registered."
-    //   ) {
-    //     setPhoneError({
-    //       status: true,
-    //       message: "Số điện thoại của bạn đã được sử dụng.",
-    //     });
-    //     setSpinning(false);
-    //     return;
-    //   }
-    //   if (
-    //     responseData?.statusCode === 208 &&
-    //     responseData?.message === "Your nickname is already registered."
-    //   ) {
-    //     setNicknameError({
-    //       status: true,
-    //       message: "Nickname của bạn đã được sử dụng.",
-    //     });
-    //     setSpinning(false);
-    //     return;
-    //   }
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      if (
+        responseData?.statusCode === 208 &&
+        responseData?.message === "Your phone is already registered."
+      ) {
+        setPhoneError({
+          status: true,
+          message: "Số điện thoại của bạn đã được sử dụng.",
+        });
+        setSpinning(false);
+        return;
+      }
+      if (
+        responseData?.statusCode === 208 &&
+        responseData?.message === "Your nickname is already registered."
+      ) {
+        setNicknameError({
+          status: true,
+          message: "Nickname của bạn đã được sử dụng.",
+        });
+        setSpinning(false);
+        return;
+      }
 
-    //   console.log("User sau khi update:", responseData);
+      console.log("User sau khi update:", responseData);
 
-    //   setSpinning(false);
-    // } catch (error) {
-    //   console.error(error);
-    //   // Hiển thị thông báo lỗi cho người dùng nếu cần
-    // }
+      setSpinning(false);
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
 
-    // try {
-    //   const response = await fetch(
-    //     "http://localhost:8088/api/v1/users/" +
-    //       userId +
-    //       "/interest-gender/" +
-    //       userUpdated.interestGenderId,
-    //     {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Authorization: "Bearer " + TOKEN,
-    //       },
-    //       body: JSON.stringify(formInterestGenderData),
-    //     }
-    //   );
+    try {
+      const response = await fetch(
+        "http://localhost:8088/api/v1/users/" +
+          userId +
+          "/interest-gender/" +
+          userUpdated.interestGenderId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + TOKEN,
+          },
+          body: JSON.stringify(formInterestGenderData),
+        }
+      );
 
-    //   // Xử lý response nếu cần
-    //   const responseData = await response.json();
-    //   console.log("User InterestGender sau khi update:", responseData);
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      console.log("User InterestGender sau khi update:", responseData);
 
-    //   setSpinning(false);
-    // } catch (error) {
-    //   console.error(error);
-    //   // Hiển thị thông báo lỗi cho người dùng nếu cần
-    // }
+      setSpinning(false);
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
 
     successMessage("Bạn đã cập nhật profile thành công.");
     console.log(fileList);
@@ -715,19 +715,15 @@ export default function ProfilePage() {
       {contextHolder}
       <Spin spinning={spinning} fullscreen />
 
-      <div className="page-title">Thông tin cá nhân</div>
+      {/* <div className="page-title">Thông tin cá nhân</div>
       <Upload
-        // action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-
         customRequest={handleCustomRequest}
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
-        // onChange={handleChange}
         accept="image/*"
         method="POST"
         onChange={handleOnChange}
-        // headers={}
       >
         {fileList.length >= 8 ? null : uploadButton}
       </Upload>
@@ -744,7 +740,7 @@ export default function ProfilePage() {
           src={previewImage}
           alt="image preview"
         />
-      )}
+      )} */}
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-lg-6">
