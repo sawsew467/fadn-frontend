@@ -210,7 +210,7 @@ export default function ProfilePage() {
         console.log(error);
       });
 
-      const data = await res.json();
+      const data = await res?.json();
       setUserData(data);
       localStorage.setItem("userId", data.id);
       console.log(data);

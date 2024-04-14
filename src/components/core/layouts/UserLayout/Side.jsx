@@ -1,5 +1,4 @@
 "use client";
-import "bootstrap/dist/css/bootstrap.css";
 import "@/styles/css/bootstrap.min.css";
 import "@/styles/css/animate.css";
 import "@/styles/css/magnific-popup.css";
