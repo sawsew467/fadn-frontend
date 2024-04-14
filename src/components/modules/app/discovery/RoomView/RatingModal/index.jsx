@@ -13,9 +13,25 @@ function RatingModal({ isModalOpen = false }) {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    console.log(form);
-    setIsLoading(false);
-    router.push("/app");
+    try {
+      setIsLoading(true);
+      const response = await fetch("http://localhost:8088/api/v1/feedbacks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await response?.json();
+      console.log(data);
+
+      setIsLoading(false);
+      router.push("/app");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Modal
