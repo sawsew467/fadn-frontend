@@ -1,3 +1,4 @@
+import React from "react";
 import LandingLayout from "@/components/core/layouts/LandingLayout";
 
 export const metadata = {
