@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^2.2.1",
     "@stomp/stompjs": "^7.0.0",
     "@videosdk.live/react-sdk": "^0.1.84",
