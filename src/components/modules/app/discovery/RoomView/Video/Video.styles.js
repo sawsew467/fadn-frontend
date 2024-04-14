@@ -3,9 +3,18 @@ import { Button, Flex } from "antd";
 
 export const PlayerWrap = styled.div`
   position: relative;
-  height: 100%;
+  height: fit-content;
   background-color: #202124;
   border-radius: 12px;
+
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: fit-content !important;
+  }
+
   & .react-player > div {
     width: 100% !important;
     height: auto !important;

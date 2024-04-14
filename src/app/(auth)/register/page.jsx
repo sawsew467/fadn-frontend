@@ -6,7 +6,7 @@ import "@/styles/css/bootstrap.min.css";
 import "@/styles/css/main.css";
 import "@/styles/css/dark.css";
 import "@/styles/css/responsive.css";
-import { Modal, Popover, Button, message, Steps, theme } from "antd";
+import { Modal, Popover, Button, message, Steps, theme, Spin } from "antd";
 import Link from "next/link";
 
 import AccountDetails from "@/components/modules/auth/SignUp/AccountDetails.jsx";
@@ -21,39 +21,7 @@ import {
   validateLookingFor,
   validateStatus,
 } from "@/input-validate/index.js";
-
-const modal = {
-  title: <h4 className="title">Bạn nhớ kiểm tra email của mình nha!</h4>,
-  content: (
-    <div
-      className="modal fade show"
-      id="email-confirm"
-      tabindex="-1"
-      style={{ display: "block", position: "relative" }}
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-body">
-            <div className="top-img">
-              <img src="/pageImages/c-image.png" alt="" />
-            </div>
-            <div className="main-content">
-              {/* <h4 className="title">Check Your Inbox, Please!</h4> */}
-              <p>
-                Một liên kết để xác minh tài khoản đã được gửi đến email được
-                cung cấp. Vui lòng mở liên kết và làm theo lời nhắc để xác minh
-                email.
-              </p>
-              <p className="send-again">
-                Không nhận được email? <a href="#">Gửi lại</a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-};
+import { useRouter, useSearchParams } from "next/navigation";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -110,6 +78,25 @@ function Register() {
     status: false,
     message: "",
   });
+
+  // useEffect(() => {
+  //   const userGoogleJSON = localStorage.getItem("userGoogle");
+  //   const userObject = JSON.parse(userGoogleJSON);
+  //   if (userObject) {
+  //     console.log(userObject);
+  //     setEmail(userObject.email);
+  //     setPassword(userObject.email); // password is email
+  //     setFirstname(userObject.given_name);
+  //     setLastname(userObject.family_name);
+  //     localStorage.removeItem("userGoogle");
+  //   } else {
+  //     setEmail("");
+  //     setPassword(""); // password is email
+  //     setFirstname("");
+  //     setLastname("");
+  //     console.log("Không tìm thấy userObject trong localStorage");
+  //   }
+  // }, []);
 
   // --------------------------------------------
   const handleEmailChange = (event) => {
@@ -173,18 +160,18 @@ function Register() {
     setLastname(event.target.value);
   };
   const handleNickNameChange = (event) => {
-    const validNickName = validateName(event.target.value);
-    if (!validNickName.valid) {
-      setNicknameError({
-        status: true,
-        message: validNickName.message,
-      });
-    } else {
-      setNicknameError({
-        status: false,
-        message: "",
-      });
-    }
+    // const validNickName = validateName(event.target.value);
+    // if (!validNickName.valid) {
+    //   setNicknameError({
+    //     status: true,
+    //     message: validNickName.message,
+    //   });
+    // } else {
+    //   setNicknameError({
+    //     status: false,
+    //     message: "",
+    //   });
+    // }
     setNickname(event.target.value);
   };
   const handlePhoneChange = (event) => {
@@ -262,6 +249,7 @@ function Register() {
           setPasswordError={setPasswordError}
           handleEmailChange={handleEmailChange}
           handlePasswordChange={handlePasswordChange}
+          onlyRead={false}
         />
       ),
     },
@@ -312,6 +300,7 @@ function Register() {
           handleBirthdayChange={handleBirthdayChange}
           handleGenderChange={handleGenderChange}
           handleGenderLookingForChange={handleGenderLookingForChange}
+          onlyRead={false}
         />
       ),
     },
@@ -330,6 +319,7 @@ function Register() {
             setPasswordError={setPasswordError}
             handleEmailChange={handleEmailChange}
             handlePasswordChange={handlePasswordChange}
+            onlyRead={true}
           />
           <ProfileDetails
             firstname={firstname}
@@ -375,6 +365,7 @@ function Register() {
             handleBirthdayChange={handleBirthdayChange}
             handleGenderChange={handleGenderChange}
             handleGenderLookingForChange={handleGenderLookingForChange}
+            onlyRead={true}
           />
         </>
       ),
@@ -384,7 +375,21 @@ function Register() {
 
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
-  const next = (event) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(localStorage.getItem("verify-otp"));
+    if (localStorage.getItem("verify-otp") === "success") {
+      setEmail(localStorage.getItem("email"));
+      setPassword(localStorage.getItem("password"));
+      setCurrent(1);
+      localStorage.removeItem("verify-otp");
+    } else {
+      console.log("CCCC");
+    }
+  }, []);
+
+  const next = async (event) => {
     event.preventDefault();
 
     // --------------- Step 1 ---------------
@@ -408,7 +413,12 @@ function Register() {
         console.log(hasErrorStep1, emailError.status, passwordError.status);
         console.log("Vui lòng điền thông tin Step 1 cần thiếu.");
       } else {
-        setCurrent((current) => current + 1);
+        if ((await handleSendEmailOTP()) == true) {
+          localStorage.setItem("email", email);
+          localStorage.setItem("password", password);
+          router.push("/verify-otp");
+          // setCurrent((current) => current + 1);
+        }
       }
     }
 
@@ -434,24 +444,24 @@ function Register() {
           hasErrorStep2 = true;
         }
       });
-      console.log("------------------------------------------");
-      console.log("birthday: " + birthday);
-      console.log("gender: " + gender);
-      console.log("genderLookingFor: " + genderLookingFor);
-      console.log("Status: " + status);
-      console.log("city: " + city);
-      console.log(
-        hasErrorStep2,
-        firstnameError.status,
-        lastnameError.status,
-        nicknameError.status,
-        phoneError.status,
-        birthdayError.status, // false -> oke
-        gender === "",
-        genderLookingFor === "",
-        status === "",
-        city === ""
-      );
+      // console.log("------------------------------------------");
+      // console.log("birthday: " + birthday);
+      // console.log("gender: " + gender);
+      // console.log("genderLookingFor: " + genderLookingFor);
+      // console.log("Status: " + status);
+      // console.log("city: " + city);
+      // console.log(
+      //   hasErrorStep2,
+      //   firstnameError.status,
+      //   lastnameError.status,
+      //   nicknameError.status,
+      //   phoneError.status,
+      //   birthdayError.status, // false -> oke
+      //   gender === "",
+      //   genderLookingFor === "",
+      //   status === "",
+      //   city === ""
+      // );
       if (
         hasErrorStep2 ||
         firstnameError.status ||
@@ -490,55 +500,125 @@ function Register() {
     padding: 20,
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // 👈️ prevent page refresh
+  const [spinning, setSpinning] = useState(false);
+  const handleSendEmailOTP = async () => {
+    setSpinning(true);
+    const codeOtp = Math.floor(111111 + Math.random() * (999999 - 111111 + 1));
+    localStorage.setItem("otpCode", codeOtp);
 
     const postData = {
-      firstname: firstname,
-      lastname: lastname,
-      nickname: nickname,
-      gender: gender,
-      email: email,
-      password: password,
-      phone: phone,
-      birthday: birthday,
-      genderLookingFor: genderLookingFor,
-      status: status,
-      city: city,
+      recipient: email,
+      subject: "Cupid Dating Verification Email",
+      message: codeOtp,
+    };
+
+    try {
+      // Thực hiện POST API bằng fetch
+      const response = await fetch(
+        "http://localhost:8088/api/v1/send-mail-otp",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
+
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      console.log("Response từ API:", responseData);
+
+      if (responseData?.statusCode == 208 && responseData?.message.length > 0) {
+        setEmailError({
+          status: true,
+          message: "Email của bạn đã đăng kí trước đây rồi.",
+        });
+        setSpinning(false);
+        return false;
+      }
+
+      setSpinning(false);
+      return true;
+      // Modal thông báo confirm đã gửi email
+      // Modal.success(modal);
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setSpinning(true);
+    const postData = {
+      userDTO: {
+        firstName: firstname,
+        lastName: lastname,
+        nickname: nickname,
+        password: password,
+        genderDTO: { id: gender },
+        statusDTO: { id: status },
+        email: email,
+        phone: phone,
+        city: city,
+        dob: birthday,
+        fbAccountId: null,
+        googleAccountId: null,
+        confirmationCode: localStorage.getItem("otpCode"),
+        profileDTO: null,
+      },
+      interestGenderDTO: {
+        genderDTO: { id: genderLookingFor },
+      },
     };
 
     console.log(postData);
 
-    // try {
-    //   // Thực hiện POST API bằng fetch
-    //   const response = await fetch("URL_API", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(postData),
-    //   });
+    try {
+      // Thực hiện POST API bằng fetch
+      const response = await fetch(
+        "http://localhost:8088/api/v1/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(postData),
+        }
+      );
 
-    //   // Kiểm tra xem request thành công hay không
-    //   if (!response.ok) {
-    //     throw new Error("Có lỗi xảy ra khi gửi yêu cầu.");
-    //   }
+      // Xử lý response nếu cần
+      const responseData = await response.json();
+      console.log("Response từ API:", responseData);
 
-    //   // Xử lý response nếu cần
-    //   const responseData = await response.json();
-    //   console.log("Response từ API:", responseData);
+      if (responseData?.statusCode == 208 && responseData?.message.length > 0) {
+        setEmailError({
+          status: true,
+          message: "Email của bạn đã đăng kí trước đây rồi.",
+        });
+        return;
+      }
 
-    //   // Modal thông báo confirm đã gửi email
-    //   Modal.success(modal);
-    // } catch (error) {
-    //   // Xử lý lỗi
-    //   console.error("Lỗi khi gửi dữ liệu:", error.message);
-    //   // Hiển thị thông báo lỗi cho người dùng nếu cần
-    // }
+      // Lưu token vào Local Storage
+      localStorage.setItem("token", responseData.token);
+
+      // localStorage.removeItem("email");
+      localStorage.removeItem("password");
+      localStorage.removeItem("otpCode");
+      setSpinning(false);
+      router.push("/profile");
+    } catch (error) {
+      console.error(error);
+      // Hiển thị thông báo lỗi cho người dùng nếu cần
+    }
   };
+  // ---------------------------------------------------------------------------
 
   return (
     <>
+      <Spin spinning={spinning} fullscreen />
       <section className="log-reg">
         <div className="top-menu-area">
           <div className="container">

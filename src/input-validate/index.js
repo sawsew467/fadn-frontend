@@ -59,7 +59,7 @@ const validatePhone = (phone) => {
 };
 
 const validateBirthOfDate = (bod) => {
-  const yearGap = 7; // The minimum of years old to assign
+  const yearGap = 10; // The minimum of years old to assign
   const currentDate = new Date();
   const inputDate = new Date(bod);
   inputDate.setFullYear(inputDate.getFullYear() + yearGap);
@@ -68,7 +68,7 @@ const validateBirthOfDate = (bod) => {
   const message = valid
     ? // ? "success"
       ""
-    : "Ngày sinh của bạn phải đủ 7 tuổi trở lên.";
+    : "Ngày sinh của bạn phải đủ " + yearGap + " tuổi trở lên.";
 
   return { valid, message };
 };

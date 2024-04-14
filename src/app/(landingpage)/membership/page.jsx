@@ -10,6 +10,7 @@ function Membership() {
   };
   return (
     <>
+      {/* ==========Breadcrumb-Section========== */}
       <section className="breadcrumb-area profile-bc-area">
         <div className="container">
           <div className="content">
@@ -76,7 +77,6 @@ function Membership() {
                 </p>
               </div>
             </div>
-
           </div>
           <div className="row">
             <div className="col-lg-12">
@@ -96,7 +96,7 @@ function Membership() {
                     <div className="single-plan">
                       <p className="duration">Basic</p>
                       <h4 className="number">
-                        <sup>$</sup>9.99
+                        <sup>$</sup>10
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
@@ -117,7 +117,7 @@ function Membership() {
                     <div className="single-plan">
                       <p className="duration">Standard</p>
                       <h4 className="number">
-                        <sup>$</sup>19.99
+                        <sup>$</sup>20
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
@@ -138,7 +138,7 @@ function Membership() {
                     <div className="single-plan">
                       <p className="duration">Premium</p>
                       <h4 className="number">
-                        <sup>$</sup>29.99
+                        <sup>$</sup>30
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
@@ -220,7 +220,6 @@ function Membership() {
               ))}
             </div>
           </div>
-
         </div>
       </section>
       {/* ==========Faq-Section========== */}
@@ -247,4 +246,7 @@ const faqData = [
   },
 ];
 
+{
+  /* (&quot; || &ldquo; || &#34; || &rdquo;) */
+}
 export default Membership;

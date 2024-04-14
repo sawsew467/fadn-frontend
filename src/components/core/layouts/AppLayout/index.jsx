@@ -6,6 +6,10 @@ import { Avatar, Layout, Divider, Badge } from "antd";
 import { sidebarAppMenu } from "@/helpers/data/layout";
 
 import * as S from "./AppLayout.styles";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { actionChangeUserInfo } from "@/store/features/auth/authSlice";
+import { useCallback, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const { Content, Sider } = Layout;
 
@@ -37,6 +41,36 @@ const AppLayout = ({ children }) => {
     },
   ];
 
+  const router = useRouter();
+
+  const dispatch = useAppDispatch();
+
+  const getMe = useCallback(async () => {
+    try {
+      const getMeResponse = await fetch(
+        "http://localhost:8088/api/v1/auth/get-me",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const getMeResult = await getMeResponse.json();
+
+      console.log("getMeResult:", getMeResult);
+      dispatch(actionChangeUserInfo(getMeResult));
+    } catch (error) {
+      console.log(error);
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    getMe();
+  }, [getMe]);
+
   return (
     <Layout
       style={{
@@ -63,9 +97,10 @@ const AppLayout = ({ children }) => {
           />
         </S.ImageLogo>
         <S.MenuStyled
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={["0"]}
           mode="inline"
           items={sidebarAppMenu}
+          onClick={(item) => router.push(sidebarAppMenu[item?.key]?.href)}
         />
         <Divider />
         <h3

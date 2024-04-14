@@ -10,7 +10,7 @@ export default function UpgradeAccount() {
           <div className="single-plan">
             <p className="duration">Basic</p>
             <h4 className="number">
-              <sup>$</sup>9.99
+              <sup>$</sup>10
             </h4>
             <p className="stamet">Per Month</p>
             <Link
@@ -31,7 +31,7 @@ export default function UpgradeAccount() {
           <div className="single-plan">
             <p className="duration">Standard</p>
             <h4 className="number">
-              <sup>$</sup>19.99
+              <sup>$</sup>20
             </h4>
             <p className="stamet">Per Month</p>
             <Link
@@ -52,7 +52,7 @@ export default function UpgradeAccount() {
           <div className="single-plan">
             <p className="duration">Premium</p>
             <h4 className="number">
-              <sup>$</sup>29.99
+              <sup>$</sup>30
             </h4>
             <p className="stamet">Per Month</p>
             <Link

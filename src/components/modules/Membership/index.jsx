@@ -200,7 +200,8 @@ function Checkout() {
                                     <div className="package_inner">
                                         {packages.map((item) => (
                                             <div className="package_item" key={item.packageID}>
-                                                <p>{item.packageName}</p>
+                                                <h3 style={{ color: "white" }}>{item.packageName}</h3>
+                                                <p>{item.packageContent}</p>
                                                 <p>{item.packagePrice}</p>
                                                 <Button
                                                     style={{
@@ -335,6 +336,7 @@ const packages = [
         packageID: "PACKAGE001",
         packageName: "Basic Package",
         packagePrice: "10$",
+        packageContent: "The basic premium package offering minimal extra features.",
         transactionId: `PACKAGE001${randomNumber}`,
         packageQR: `https://img.vietqr.io/image/VietinBank-109875050449-qr_only.png?amount=10000&addInfo=${encodeURIComponent(`PACKAGE001-${randomNumber}`)}`,
     },
@@ -342,6 +344,7 @@ const packages = [
         packageID: "PACKAGE002",
         packageName: "Standard Package",
         packagePrice: "20$",
+        packageContent: "The standard premium package with more features.",
         transactionId: `PACKAGE002${randomNumber}`,
         packageQR: `https://img.vietqr.io/image/VietinBank-109875050449-qr_only.png?amount=20000&addInfo=${encodeURIComponent(`PACKAGE002-${randomNumber}`)}`,
     },
@@ -349,6 +352,7 @@ const packages = [
         packageID: "PACKAGE003",
         packageName: "Premium Package",
         packagePrice: "30$",
+        packageContent: "The most advanced package with all amazing features.",
         transactionId: `PACKAGE003${randomNumber}`,
         packageQR: `https://img.vietqr.io/image/VietinBank-109875050449-qr_only.png?amount=30000&addInfo=${encodeURIComponent(`PACKAGE003-${randomNumber}`)}`,
     },

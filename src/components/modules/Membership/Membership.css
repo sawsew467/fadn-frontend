@@ -33,10 +33,14 @@
     background: #262a53;
     color: white;
     border-radius: 25px;
-    font-weight: bold;
+    font-weight: 10px;
     width: 20rem;
     font-size: 20px;
     text-align: center;
+}
+
+.package_item {
+    color: white;
 }
 
 .close-circle {
@@ -48,4 +52,5 @@
     font-size: 60px;
     margin-top: 10px 
 }
+
 

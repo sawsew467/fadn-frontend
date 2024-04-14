@@ -1,6 +1,26 @@
 import { SettingOutlined, HeartOutlined, MessageOutlined, PieChartOutlined } from "@ant-design/icons";
 
 
+export const sidebarAppMenu = [
+  {
+    key: 0,
+    icon: <HeartOutlined />,
+    label: "Khám phá",
+    href: "/app/",
+  },
+  {
+    key: 1,
+    icon: <MessageOutlined />,
+    label: "Tin nhắn",
+    href: "/app/messages",
+  },
+  {
+    key: 2,
+    icon: <SettingOutlined />,
+    label: "Cài đặt",
+    href: "/app/settings",
+  },
+];
 
 export const sidebarAdminMenu = [
 

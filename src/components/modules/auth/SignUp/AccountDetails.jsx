@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { validateEmail, validatePassword } from "@/input-validate/index.js";
 
 function AccountDetails({
@@ -12,12 +12,20 @@ function AccountDetails({
   setPasswordError,
   handleEmailChange,
   handlePasswordChange,
+  onlyRead,
 }) {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
+
+  useEffect(() => {
+    setEmail(localStorage.getItem("email"));
+    setPassword(localStorage.getItem("password"));
+    // localStorage.removeItem("email");
+    // localStorage.removeItem("password");
+  }, []);
 
   return (
     <>
@@ -50,6 +58,7 @@ function AccountDetails({
           style={{
             border: emailError?.status ? "1px solid red" : "",
           }}
+          readOnly={onlyRead}
         />
         {emailError?.status && (
           <p style={{ color: "red" }}>{emailError?.message}</p>
@@ -74,6 +83,7 @@ function AccountDetails({
             onChange={handlePasswordChange}
             value={password}
             style={{ border: passwordError?.status && "1px solid red" }}
+            readOnly={onlyRead}
           />
           <i
             className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"}`}
