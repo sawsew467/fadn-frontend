@@ -199,7 +199,7 @@ export default function ProfilePage() {
 
     (async () => {
       const res = await fetch(
-        "http://localhost:8080/api/v1/users/email/" + EMAIL,
+        "http://localhost:8088/api/v1/users/email/" + EMAIL,
         {
           method: "GET",
           headers: {
@@ -505,7 +505,7 @@ export default function ProfilePage() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/users/" + userId,
+        "http://localhost:8088/api/v1/users/" + userId,
         {
           method: "PATCH",
           headers: {
@@ -551,7 +551,7 @@ export default function ProfilePage() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/v1/users/" +
+        "http://localhost:8088/api/v1/users/" +
           userId +
           "/interest-gender/" +
           userUpdated.interestGenderId,

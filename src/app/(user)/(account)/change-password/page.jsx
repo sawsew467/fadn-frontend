@@ -80,7 +80,7 @@ export default function ChangePassword() {
     };
     try {
       const res = await fetch(
-        "http://localhost:8080/api/v1/users/" +
+        "http://localhost:8088/api/v1/users/" +
           userId +
           "/update-password/" +
           currentPassword,
@@ -156,7 +156,7 @@ export default function ChangePassword() {
 
         try {
           const res = await fetch(
-            "http://localhost:8080/api/v1/users/" + userId,
+            "http://localhost:8088/api/v1/users/" + userId,
             {
               method: "PATCH",
               headers: {
