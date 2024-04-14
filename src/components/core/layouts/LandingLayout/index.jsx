@@ -4,9 +4,9 @@ import Header from "./Header";
 function LandingLayout({ children }) {
   return (
     <>
-      {/* <Header></Header> */}
+      <Header></Header>
       <main>{children}</main>
-      {/* <Footer></Footer> */}
+      <Footer></Footer>
     </>
   );
 }

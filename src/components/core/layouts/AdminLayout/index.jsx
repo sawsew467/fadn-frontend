@@ -8,8 +8,12 @@ import { BellOutlined } from "@ant-design/icons";
 import { sidebarAdminMenu } from "@/helpers/data/layout";
 
 import DropdownNotification from "../../common/DropdownNotification";
-
+import { SearchOutlined } from "@ant-design/icons";
+import { Flex, Input } from "antd";
 import * as S from "./AdminLayout.styles";
+
+
+
 
 const { Content, Sider } = Layout;
 
@@ -18,6 +22,9 @@ const AdminLayout = ({ children }) => {
   const handleLogout = () => {
     //
   };
+  const handleItemClick = (item) => {
+    router.push(item?.href);
+  }
   const items = [
     {
       key: "1",
@@ -32,6 +39,7 @@ const AdminLayout = ({ children }) => {
       ),
     },
   ];
+
 
   return (
     <Layout
@@ -62,55 +70,20 @@ const AdminLayout = ({ children }) => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={sidebarAdminMenu}
+
+          onClick={(e) => {
+            sidebarAdminMenu.map((item) => {
+              if (item.key == e.key) {
+                // console.log(e)
+                // console.log(item?.href)
+                router.push(item?.href)
+              }
+            })
+          }}
         />
       </Sider>
+
       <Layout>
-        <S.HeaderStyled
-          style={{
-            padding: 0,
-            background: "#fff",
-          }}
-        >
-          <S.HeaderRight>
-            <Dropdown
-              arrow={{ pointAtCenter: true }}
-              trigger={["click"]}
-              dropdownRender={() => <DropdownNotification />}
-            >
-              <Badge count={5}>
-                <BellOutlined style={{ fontSize: "24px", color: "#297fff" }} />
-              </Badge>
-            </Dropdown>
-            <Dropdown
-              menu={{ items }}
-              placement="bottom"
-              arrow={{ pointAtCenter: true }}
-              trigger={["click"]}
-            >
-              <div className="wrap-options">
-                <Avatar
-                  src={
-                    <Image
-                      src={"/images/avatar/img1.png"}
-                      alt="avatar"
-                      priority={true}
-                      width={16}
-                      height={16}
-                    ></Image>
-                  }
-                ></Avatar>
-                <p className="user-name">Tran Van Bao Thang</p>
-                <Image
-                  className="dropdown-icon"
-                  src="/icons/layout/dropdown.svg"
-                  alt="dropdown"
-                  width={8}
-                  height={4}
-                />
-              </div>
-            </Dropdown>
-          </S.HeaderRight>
-        </S.HeaderStyled>
         <Content
           style={{
             padding: "32px",
@@ -119,6 +92,7 @@ const AdminLayout = ({ children }) => {
         >
           {children}
         </Content>
+
       </Layout>
     </Layout>
   );

@@ -6,11 +6,11 @@ export default function UpgradeAccount() {
     <>
       <div className="page-title">Nâng Cấp Tài Khoản</div>
       <div className="row">
-        <div className="col-md-6">
+        <div className="col-md-8">
           <div className="single-plan">
-            <p className="duration">1 Month</p>
+            <p className="duration">Basic</p>
             <h4 className="number">
-              <sup>$</sup>2.99
+              <sup>$</sup>10
             </h4>
             <p className="stamet">Per Month</p>
             <Link
@@ -27,11 +27,11 @@ export default function UpgradeAccount() {
             />
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-8">
           <div className="single-plan">
-            <p className="duration">3 Month</p>
+            <p className="duration">Standard</p>
             <h4 className="number">
-              <sup>$</sup>4.99
+              <sup>$</sup>20
             </h4>
             <p className="stamet">Per Month</p>
             <Link
@@ -48,32 +48,11 @@ export default function UpgradeAccount() {
             />
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-8">
           <div className="single-plan">
-            <p className="duration">6 Month</p>
+            <p className="duration">Premium</p>
             <h4 className="number">
-              <sup>$</sup>5.99
-            </h4>
-            <p className="stamet">Per Month</p>
-            <Link
-              style={{ textDecoration: "none" }}
-              href="/checkout"
-              className="custom-button"
-            >
-              Buy Now!
-            </Link>
-            <img
-              className="shape"
-              src="/pageImages/membership/plan-bg.png"
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="col-md-6">
-          <div className="single-plan">
-            <p className="duration">12 Month</p>
-            <h4 className="number">
-              <sup>$</sup>7.99
+              <sup>$</sup>30
             </h4>
             <p className="stamet">Per Month</p>
             <Link

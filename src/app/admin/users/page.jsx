@@ -1,5 +1,12 @@
-function Membership() {
-  return <div>Users management</div>;
+import Users from '@/components/modules/admin/ViewUsers'
+import React from 'react'
+
+function page() {
+  return (
+    <div>
+      <Users />
+    </div>
+  )
 }
 
-export default Membership;
+export default page

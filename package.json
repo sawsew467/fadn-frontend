@@ -12,7 +12,7 @@
     "@ant-design/nextjs-registry": "^1.0.0",
     "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^2.2.1",
-    "@stomp/stompjs": "^7.0.0",
+    "bootstrap": "^4.3.1",
     "@videosdk.live/react-sdk": "^0.1.84",
     "axios": "^1.6.8",
     "firebase": "^10.10.0",
@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "20.11.20",
     "@types/react": "18.2.58",
-    "eslint": "^8",
+    "eslint": "^8.0.0",
     "eslint-config-next": "14.1.0"
   }
 }

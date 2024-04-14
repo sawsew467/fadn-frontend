@@ -77,15 +77,6 @@ function Membership() {
                 </p>
               </div>
             </div>
-            {/* <div className="col-lg-3 col-md-6">
-              <div className="plan-info">
-                <div className="icon">
-                  <img src="/pageImages/membership/icon4.png" alt="" />
-                </div>
-                <h4 className="title">Take more messages</h4>
-                <p className="text">Send and receive messages with no limits</p>
-              </div>
-            </div> */}
           </div>
           <div className="row">
             <div className="col-lg-12">
@@ -101,15 +92,15 @@ function Membership() {
                   alt=""
                 />
                 <div className="row">
-                  <div className="col-lg-3 col-md-6">
+                  <div className="col-lg-4 col-md-8">
                     <div className="single-plan">
-                      <p className="duration">12 Months</p>
+                      <p className="duration">Basic</p>
                       <h4 className="number">
-                        <sup>$</sup>4.99
+                        <sup>$</sup>10
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
-                        href="/checkout"
+                        href="/membership/checkout"
                         className="custom-button"
                         style={{ textDecoration: "none" }}
                       >
@@ -122,15 +113,15 @@ function Membership() {
                       />
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-6">
+                  <div className="col-lg-4 col-md-8">
                     <div className="single-plan">
-                      <p className="duration">6 Months</p>
+                      <p className="duration">Standard</p>
                       <h4 className="number">
-                        <sup>$</sup>3.99
+                        <sup>$</sup>20
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
-                        href="/checkout"
+                        href="/membership/checkout"
                         className="custom-button"
                         style={{ textDecoration: "none" }}
                       >
@@ -143,36 +134,15 @@ function Membership() {
                       />
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-6">
+                  <div className="col-lg-4 col-md-8">
                     <div className="single-plan">
-                      <p className="duration">3 Months</p>
+                      <p className="duration">Premium</p>
                       <h4 className="number">
-                        <sup>$</sup>2.99
+                        <sup>$</sup>30
                       </h4>
                       <p className="stamet">Per Month</p>
                       <Link
-                        href="/checkout"
-                        className="custom-button"
-                        style={{ textDecoration: "none" }}
-                      >
-                        Buy Now!
-                      </Link>
-                      <img
-                        className="shape"
-                        src="/pageImages/membership/plan-bg.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-3 col-md-6">
-                    <div className="single-plan">
-                      <p className="duration">1 Month</p>
-                      <h4 className="number">
-                        <sup>$</sup>1.99
-                      </h4>
-                      <p className="stamet">Per Month</p>
-                      <Link
-                        href="/checkout"
+                        href="/membership/checkout"
                         className="custom-button"
                         style={{ textDecoration: "none" }}
                       >
@@ -235,9 +205,8 @@ function Membership() {
               {faqData.map((item, index) => (
                 <div
                   key={index}
-                  className={`faq-item ${
-                    index === openIndex ? "active open" : ""
-                  }`}
+                  className={`faq-item ${index === openIndex ? "active open" : ""
+                    }`}
                   onClick={() => handleItemClick(index)}
                 >
                   <div className="faq-title">
@@ -251,100 +220,6 @@ function Membership() {
               ))}
             </div>
           </div>
-          {/* <div className="faq-area">
-            <div className="faq-wrapper">
-              <div className="faq-item">
-                <div className="faq-title">
-                  <h6 className="title">What is Peyamba? </h6>
-                  <span className="right-icon"></span>
-                </div>
-                <div className="faq-content">
-                  <p>
-                    Being that Tickto does not own any of the tickets sold on
-                    our site, we do not have the ability to exchange or replace
-                    tickets with other inventory.{" "}
-                  </p>
-                  <p>
-                    If you would like to &ldquo;upgrade&rdquo; or change the
-                    location of your seats, you can relist your current tickets
-                    for sale here and purchase other tickets of your choice.{" "}
-                  </p>
-                </div>
-              </div>
-              <div className="faq-item active open">
-                <div className="faq-title">
-                  <h6 className="title">What kind of photos can I use? </h6>
-                  <span className="right-icon"></span>
-                </div>
-                <div className="faq-content">
-                  <p>
-                    Being that Tickto does not own any of the tickets sold on
-                    our site, we do not have the ability to exchange or replace
-                    tickets with other inventory.{" "}
-                  </p>
-                  <p>
-                    If you would like to &ldquo;upgrade&rdquo; or change the
-                    location of your seats, you can relist your current tickets
-                    for sale here and purchase other tickets of your choice.{" "}
-                  </p>
-                </div>
-              </div>
-              <div className="faq-item">
-                <div className="faq-title">
-                  <h6 className="title">Which are the payment methods?</h6>
-                  <span className="right-icon"></span>
-                </div>
-                <div className="faq-content">
-                  <p>
-                    Being that Tickto does not own any of the tickets sold on
-                    our site, we do not have the ability to exchange or replace
-                    tickets with other inventory.{" "}
-                  </p>
-                  <p>
-                    If you would like to &ldquo;upgrade&rdquo; or change the
-                    location of your seats, you can relist your current tickets
-                    for sale here and purchase other tickets of your choice.{" "}
-                  </p>
-                </div>
-              </div>
-              <div className="faq-item">
-                <div className="faq-title">
-                  <h6 className="title">How Our Matchmaking Works ?</h6>
-                  <span className="right-icon"></span>
-                </div>
-                <div className="faq-content">
-                  <p>
-                    Being that Tickto does not own any of the tickets sold on
-                    our site, we do not have the ability to exchange or replace
-                    tickets with other inventory.{" "}
-                  </p>
-                  <p>
-                    If you would like to &ldquo;upgrade&rdquo; or change the
-                    location of your seats, you can relist your current tickets
-                    for sale here and purchase other tickets of your choice.{" "}
-                  </p>
-                </div>
-              </div>
-              <div className="faq-item">
-                <div className="faq-title">
-                  <h6 className="title">How can i delete my profile?</h6>
-                  <span className="right-icon"></span>
-                </div>
-                <div className="faq-content">
-                  <p>
-                    Being that Tickto does not own any of the tickets sold on
-                    our site, we do not have the ability to exchange or replace
-                    tickets with other inventory.{" "}
-                  </p>
-                  <p>
-                    If you would like to &ldquo;upgrade&rdquo; or change the
-                    location of your seats, you can relist your current tickets
-                    for sale here and purchase other tickets of your choice.{" "}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </section>
       {/* ==========Faq-Section========== */}

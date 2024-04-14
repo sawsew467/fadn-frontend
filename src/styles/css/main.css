@@ -2967,6 +2967,7 @@ input[type="submit"] {
 }
 .how-it-work-section .section-header {
   margin-bottom: 40px;
+  margin-top: 40px;
 }
 
 .single-work-box {
@@ -6905,20 +6906,11 @@ input[type="submit"] {
   margin-bottom: 18px;
 }
 .membership-section .pricing-plans {
-  padding: 193px 0px 101px;
+  padding: 60px 0px 0px;
   overflow: hidden;
-  background: #5736cb;
+  background: #202342;
   position: relative;
   text-align: center;
-}
-.membership-section .pricing-plans .shape1 {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: auto;
-  -webkit-animation: scaleAni 4s linear infinite;
-  animation: scaleAni 4s linear infinite;
 }
 .membership-section .pricing-plans .contact-link {
   font-size: 24px;
