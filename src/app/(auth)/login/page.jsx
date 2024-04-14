@@ -45,37 +45,37 @@ function Login() {
     message: "",
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await fetch("http://localhost:8088/profile", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          redirect: "follow",
-          credentials: "include",
-        });
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const res = await fetch("http://localhost:8088/profile", {
+  //         method: "GET",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         redirect: "follow",
+  //         credentials: "include",
+  //       });
 
-        const data = await res.json();
-        if (data?.statusCode == 403) {
-        } else {
-          console.log(data);
-          setUserGoogleData(data);
-          // Chuyển object thành chuỗi JSON
-          const userGoogleJSON = JSON.stringify(data);
+  //       const data = await res.json();
+  //       if (data?.statusCode == 403) {
+  //       } else {
+  //         console.log(data);
+  //         setUserGoogleData(data);
+  //         // Chuyển object thành chuỗi JSON
+  //         const userGoogleJSON = JSON.stringify(data);
 
-          // Lưu chuỗi JSON vào localStorage
-          localStorage.setItem("userGoogle", userGoogleJSON);
-          router.push("/register");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //         // Lưu chuỗi JSON vào localStorage
+  //         localStorage.setItem("userGoogle", userGoogleJSON);
+  //         router.push("/register");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    fetchUserData();
-  }, [router]);
+  //   fetchUserData();
+  // }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -269,11 +269,11 @@ function Login() {
                         Đăng nhập
                       </button>
                     </div>
-                    <div className="or">
+                    {/* <div className="or">
                       <p>hoặc</p>
-                    </div>
+                    </div> */}
                     <div className="or-content">
-                      <p>Tiếp tục với email của bạn</p>
+                      {/* <p>Tiếp tục với email của bạn</p>
                       <a
                         href="http://localhost:8088/oauth2/authorization/google"
                         className="or-btn"
@@ -281,8 +281,11 @@ function Login() {
                       >
                         <img src="/pageImages/google.png" alt="" /> Đăng nhập
                         bằng Google
-                      </a>
-                      <p className="or-signup" style={{ marginRight: "10px" }}>
+                      </a> */}
+                      <p
+                        className="or-signup"
+                        style={{ marginRight: "10px", marginTop: "30px" }}
+                      >
                         Bạn không có tài khoản?{"  "}
                         <Link
                           href="/register"

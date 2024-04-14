@@ -106,7 +106,7 @@ export default function Side() {
                     Thông báo
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     className={`${
                       pathname === "/friend-requests" ? "active" : ""
@@ -178,7 +178,7 @@ export default function Side() {
                     Thay đổi mật khẩu
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     className={`${
                       pathname === "/privacy-settings" ? "active" : ""
@@ -188,7 +188,7 @@ export default function Side() {
                   >
                     Cài đặt quyền riêng tư
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     className={`${

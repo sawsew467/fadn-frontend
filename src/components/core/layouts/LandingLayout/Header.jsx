@@ -41,10 +41,10 @@ function Header() {
             <div className="logo">
               <Link href="/">
                 <Image
-                  src="/pageImages/logo/logo.png"
+                  src="/pageImages/logo-removebg-preview.png"
                   alt="logo"
-                  width="170"
-                  height="38"
+                  width="150"
+                  height="100"
                 />
               </Link>
             </div>
