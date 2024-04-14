@@ -7,7 +7,7 @@ function Card({ id }) {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await fetch(`http://localhost:8088/api/v1/user/${id}`, {
+      const response = await fetch(`http://localhost:8088/api/v1/users/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -24,7 +24,7 @@ function Card({ id }) {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
+  console.log("cardInfor:", cardInfor);
   return (
     <S.Card>
       <S.ImageCard

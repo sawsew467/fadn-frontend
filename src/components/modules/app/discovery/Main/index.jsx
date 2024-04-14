@@ -74,10 +74,10 @@ function Discovery() {
     >
       <Flex justify="space-between" align="end">
         <p style={{ fontSize: 16 }}>Bạn đã sử dụng 5/10 lượt hôm nay!</p>
-        <Button type="primary" onClick={() => setIsModalOpen(true)}>
+        {/* <Button type="primary" onClick={() => setIsModalOpen(true)}>
           Login
-        </Button>
-        {/* <Button type="primary">UPGRADE NOW!</Button> */}
+        </Button> */}
+        <Button type="primary">UPGRADE NOW!</Button>
       </Flex>
       <Flex justify="center" align="center" flex={1}>
         {renderContent()}

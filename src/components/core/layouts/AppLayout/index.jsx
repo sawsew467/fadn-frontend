@@ -59,6 +59,8 @@ const AppLayout = ({ children }) => {
       );
 
       const getMeResult = await getMeResponse.json();
+
+      console.log("getMeResult:", getMeResult);
       dispatch(actionChangeUserInfo(getMeResult));
     } catch (error) {
       console.log(error);
